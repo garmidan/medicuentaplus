@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <title>MEDICUENTAS PLUS</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!--     Fonts and icons     -->
+
+    <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS only -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@300&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <!-- Material Kit CSS -->
+    <link href="{% static 'css/material-dashboard.css' %}" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.4/jspdf.plugin.autotable.min.js"></script>
+
+</head>
+
+<body>
+    <div class="wrapper ">
+        <div class="sidebar" data-color="purple" data-background-color="white">
+            <!--
+      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+      Tip 2: you can also add an image using data-image tag
+  -->
+            <div class="logo" style="background-color: #3c3c3c;">
+                <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+                    <img src="{% static 'imagenes/medicuentaslogo.png'%}" style=" width: 70%; margin-bottom: 10px" />
+                </a>
+            </div>
+            <div class="sidebar-wrapper" style="background-color: #3c3c3c !important;">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: #fff;" href="/dashboard">
+                            <i class="fas fa-user-circle"></i>
+                            <p>Mi Usuario</p>
+                        </a>
+                    </li>
+                    {% if usuario.rol == 'Administrador'%}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/usuarios" style="color: #fff;">
+                            <i class="fas fa-users"></i>
+                            <p>Usuarios</p>
+                        </a>
+                    </li>
+                    {%endif%}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/historiasclinicas" style="background-color: #1e73dc !important;">
+
+                            <i class="fas fa-notes-medical"></i>
+                            <p>Hitorias Clinicas</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/citas" style="color: #fff;">
+                            <i class="fas fa-calendar-alt"></i>
+                            <p>Citas</p>
+                        </a>
+                    </li>
+                    {% if usuario.rol == 'Administrador'%}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/maestros" style="color: #fff;">
+                            <i class="fas fa-cogs"></i>
+                            <p>Maestros</p>
+                        </a>
+                    </li>
+                    {%endif%}
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top"
+                style="background-color: #3c3c3c !important; color: #fff !important;">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+                        <a class="navbar-brand" href="javascript:;">
+                            <h6>Copyright © 2021 - Medicuentas Plus V 0.1</h6>
+                        </a>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="javascript:;">
+                                    {{usuario.usuario}}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout">
+                                    Cerrar Sesion
+                                </a>
+                            </li>
+                            <!-- your navbar here -->
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- End Navbar -->
+            <div class="content">
+                <div class="zima">
+                    <div class="row" style="border-bottom: 3px solid black;">
+                        <div class="col-md-6">
+                            <div style="margin-bottom: 10px; margin-top: 10px;">
+                                <p><b>Tipo Documento:</b> Socio</p>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <p><b>Apellidos Paciente:</b> Prueba</p>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <p><b>Fecha Nacimiento:</b> Prueba</p>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <p><b>Telefono:</b> Prueba</p>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <p><b>Movil:</b> Prueba</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div style="margin-bottom: 10px; margin-top: 10px;">
+                                <p><b>Numero Documento:</b> Prueba</p>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <p><b>Nombres Paciente:</b> Prueba</p>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <p><b>Edad:</b> Prueba</p>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <p><b>Sexo:</b> Prueba</p>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <p><b>Correo:</b> Prueba</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="getPDF" onclick="getPDF()">Download PDF</button>
+
+            </div>
+            <!--<footer class="footer">
+                <div class="container-fluid">
+                    <nav class="float-left">
+                        <ul>
+                            <li>
+                                <a href="https://www.creative-tim.com">
+                                    Creative Tim
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="copyright float-right">
+                        &copy;
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>, made with <i class="material-icons">favorite</i> by
+                        <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+                    </div>
+                   your footer here 
+                </div>
+            </footer>-->
+        </div>
+    </div>
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.2/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.2/datatables.min.js"></script>
+    <script>
+        function getPDF() {
+            var doc = new jsPDF();
+
+            // We'll make our own renderer to skip this editor
+            var specialElementHandlers = {
+                '#getPDF': function (element, renderer) {
+                    return true;
+                },
+                '.controls': function (element, renderer) {
+                    return true;
+                }
+            };
+
+            // All units are in the set measurement for the document
+            // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
+            doc.fromHTML($('.zima').get(0), 15, 15, {
+                'width': 170,
+                'elementHandlers': specialElementHandlers
+            });
+
+            doc.save('Generated.pdf');
+        }
+    </script>
+</body>
+
+</html>

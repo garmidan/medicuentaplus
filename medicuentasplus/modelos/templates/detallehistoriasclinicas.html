@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <title>MEDICUENTAS PLUS</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS only -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@300&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <!-- Material Kit CSS -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700,800,900&amp;amp;display=swap" />
+    <link rel="stylesheet" href="{% static 'css/vendor/bootstrap.min.css' %}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
+    <link href="{% static 'css/material-dashboard.css' %}" rel="stylesheet" />
+        <script type = "text/javascript" >  
+            function preventBack() { window.history.forward(); }  
+            setTimeout("preventBack()", 0);  
+            window.onunload = function () { null };  
+        </script> 
+</head>
+
+<body>
+    <div class="wrapper ">
+        <div class="sidebar" data-color="purple" data-background-color="white">
+            <!--
+      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+      Tip 2: you can also add an image using data-image tag
+  -->
+            <div class="logo" style="background-color: #3c3c3c;">
+                <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+                    <img src="{% static 'imagenes/medicuentaslogo.png'%}" style=" width: 70%; margin-bottom: 10px" />
+                </a>
+            </div>
+            <div class="sidebar-wrapper" style="background-color: #3c3c3c !important;">
+                <ul class="nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" style="background-color: #1e73dc !important;" href="/dashboard">
+                            <i class="fas fa-user-circle"></i>
+                            <p style="color: #fff !important;">Mi Usuario</p>
+                        </a>
+                    </li>
+                    {% if usuario.rol == 'Administrador'%}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/usuarios" style="color: #fff;">
+                            <i class="fas fa-users"></i>
+                            <p style="color: #fff !important;">Usuarios</p>
+                        </a>
+                    </li>
+                    {%endif%}
+                    <li class="nav-item">
+                        <a class="nav-link" href="//historiasclinicas" style="color: #fff;">
+                            <i class="fas fa-notes-medical"></i>
+                            <p style="color: #fff !important;">Historias Clinicas</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/citas" style="color: #fff !important;">
+                            <i class="fas fa-calendar-alt"></i>
+                            <p style="color: #fff !important;">Citas</p>
+                        </a>
+                    </li>
+                    {% if usuario.rol == 'Administrador'%}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/maestros" style="color: #fff !important;">
+                            <i class="fas fa-cogs"></i>
+                            <p style="color: #fff !important;">Maestros</p>
+                        </a>
+                    </li>
+                    {%endif%}
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top"
+                style="background-color: #3c3c3c !important; color: #fff !important;">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+                        <a class="navbar-brand" href="javascript:;">
+                            <h6 style="color: #fff !important; font-size: 12px;">Copyright © 2021 - Medicuentas Plus V
+                                0.1</h6>
+                        </a>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="javascript:;"
+                                    style="color: #fff !important; font-size: 12px;">
+                                    {{usuario.usuario}}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout" style="color: #fff !important; font-size: 12px;">
+                                    Cerrar Sesion
+                                </a>
+                            </li>
+                            <!-- your navbar here -->
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- End Navbar -->
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-12" style="text-align: center;">
+                        <h1>Datos Del Paciente</h1>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>Fecha Atención:</b> {{historiaclinica.paciente.fechacita}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>Hora Atención:</b> {{historiaclinica.horaatencion}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>Tipo Documento:</b> {{historiaclinica.paciente.tipodocumento}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>Nombres:</b> {{historiaclinica.paciente.nombres}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>Apellidos:</b> {{historiaclinica.paciente.apellidos}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>Fecha Nacimiento:</b> {{historiaclinica.paciente.fechanacimiento}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>Edad:</b> {{historiaclinica.paciente.edad}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>Gmail:</b> {{historiaclinica.paciente.correo}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>Sexo:</b> {{historiaclinica.paciente.sexo}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>Telefono:</b> {{historiaclinica.paciente.telefono}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>Movil:</b> {{historiaclinica.paciente.movil}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>Eps:</b> {{historiaclinica.eps}}</p>
+                    </div>
+                </div>
+                <br/><br/>
+                <div class="row">
+                    <div class="col-md-12" style="text-align: center;">
+                        <h1>Motivo Consulta</h1>
+                    </div>
+                    <div class="col-md-12">
+                        <p>{{historiaclinica.motivoconsulta}}</p>
+                    </div>
+                    <div class="col-md-12" style="text-align: center;">
+                        <h1>Enfermedad Actual</h1>
+                    </div>
+                    <div class="col-md-12">
+                        <p>{{historiaclinica.enfermedadactual}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

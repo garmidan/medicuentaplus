@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <title>MEDICUENTAS PLUS</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS only -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@300&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <!-- Material Kit CSS -->
+    <link href="{% static 'css/material-dashboard.css' %}" rel="stylesheet" />
+        <script type = "text/javascript" >  
+            function preventBack() { window.history.forward(); }  
+            setTimeout("preventBack()", 0);  
+            window.onunload = function () { null };  
+        </script> 
+</head>
+
+<body>
+    <div class="wrapper ">
+        <div class="sidebar" data-color="purple" data-background-color="white">
+            <!--
+      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+      Tip 2: you can also add an image using data-image tag
+  -->
+            <div class="logo" style="background-color: #3c3c3c;">
+                <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+                    <img src="{% static 'imagenes/medicuentaslogo.png'%}" style=" width: 70%; margin-bottom: 10px" />
+                </a>
+            </div>
+            <div class="sidebar-wrapper" style="background-color: #3c3c3c !important;">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: #fff;" href="/dashboard">
+                            <i class="fas fa-user-circle"></i>
+                            <p>Mi Usuario</p>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/usuarios" style="background-color: #1e73dc !important;">
+                            <i class="fas fa-users"></i>
+                            <p>Usuarios</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/historiasclinicas" style="color: #fff;">
+                            <i class="fas fa-notes-medical"></i>
+                            <p>Historias Clinicas</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/citas" style="color: #fff;">
+                            <i class="fas fa-calendar-alt"></i>
+                            <p>Citas</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/maestros" style="color: #fff;">
+                            <i class="fas fa-cogs"></i>
+                            <p>Maestros</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top"
+                style="background-color: #3c3c3c !important; color: #fff !important;">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+                        <a class="navbar-brand" href="javascript:;">
+                            <h6>Copyright © 2021 - Medicuentas Plus V 0.1</h6>
+                        </a>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="javascript:;">
+                                    Correo
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout">
+                                    Cerrar Sesion
+                                </a>
+                            </li>
+                            <!-- your navbar here -->
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- End Navbar -->
+            <div class="content">
+                <div>
+                    <form class="row g-3" method="POST" action="/usuarios/editar/{{useredit.id}}">
+                        {% csrf_token %}
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" value="{{useredit.primernombre}}" id="validationDefault01" name="primerN" placeholder="Primer Nombre" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="validationDefault02" value="{{useredit.segundonombre}}" name="segundoN" placeholder="Segundo Nombre" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" value="{{useredit.primerapellido}}"  class="form-control" id="validationDefault01" name="primerA" placeholder="Primer Apellido"  required>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" value="{{useredit.segundoapellido}}" class="form-control" id="validationDefault02" name="segundoA" placeholder="Segundo Apellido" required>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="email" value="{{useredit.usuario}}" disabled name="correo" class="form-control" id="validationDefaultUsername"
+                                    aria-describedby="inputGroupPrepend2" placeholder="Correo" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="password" value="{{useredit.clave}}" disabled name="clave" class="form-control" id="validationDefaultUsername"
+                                    aria-describedby="inputGroupPrepend2" placeholder="Contraseña" min="10" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control" name="tipdoc" required>
+                              <option value="{{useredit.tipodocumento}}">{{useredit.tipodocumento}}</option>
+                              {% for tipodocumen in tipodocumento %}
+                              {% if tipodocumen == useredit.tipodocumento %}
+                             
+                              {%else%}
+                              <option value="{{tipodocumen}}">{{tipodocumen}}</option>
+                              {%endif%}
+                              {%endfor%}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" value="{{useredit.numerodocumento}}" name="numerodoc" class="form-control" id="validationDefaultUsername"
+                                    aria-describedby="inputGroupPrepend2" placeholder="Numero Documento" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" value="{{useredit.fechanacimiento}}" disabled name="fecha" class="form-control" id="validationDefaultUsername"
+                                    aria-describedby="inputGroupPrepend2" placeholder="Fecha Nacimiento" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control" name="sexo" required>
+                              <option selected value="{{useredit.sexo}}">{{useredit.sexo}}</option>
+                              {% for sex in sexo %}
+                              {% if sex == useredit.sexo %}
+                             
+                              {%else%}
+                              <option value="{{sex}}">{{sex}}</option>
+                              {%endif%}
+                              {%endfor%}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="number" value="{{useredit.numerotelefono}}" name="telefono" class="form-control" id="validationDefaultUsername"
+                                    aria-describedby="inputGroupPrepend2" placeholder="No Telefono" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control" name="ciudad" required>
+                                <option selected value="{{useredit.ciudad.id}}">{{useredit.ciudad.ciudad}}</option>
+                                {% for ciu in ciudad %}
+                                {% if ciu.ciudad == useredit.ciudad.ciudad %}
+                               
+                                {%else%}
+                                <option value="{{ciu.id}}">{{ciu.ciudad}}</option>
+                                {%endif%}
+                                {%endfor%}
+                            </select>
+                        </div>
+                        {% if useredit.rol == 'Prestador'%}
+                        
+                        <hr style="width: 96%; margin-left: 15px;"/>
+                        <div class="col-md-4">
+                           
+                            <select class="form-control" name="especialidad" required>
+                                <option selected value="{{useredit.especialidad.id}}">{{useredit.especialidad.especialidad}}</option>
+                                {% for espe in especialidad%}
+                                {%if espe.especialidad == useredit.especialidad.especialidad%}
+    
+                                {%else%}
+                                    <option value="{{espe.id}}">{{espe.especialidad}}</option>
+                                {%endif%}
+                              {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="number" value="{{useredit.consultorio}}" name="consultorio" class="form-control" id="consultorio"
+                                    aria-describedby="inputGroupPrepend2" placeholder="Consultorio" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control" name="asistente">
+                            <option selected value="{{useredit.id}}">{{useredit.asistente}}</option>
+                            {% for asi in asistente%}
+                            {% if asi.primernombre|add:"-"|add:asi.usuario == useredit.asistente%}
+                            {%else%}
+                            <option value="{{asi.id}}">{{asi.primernombre}} - {{asi.usuario}}</option>
+                            {%endif%}
+                            {% endfor %}
+                            </select>
+                        </div>
+                        {%endif%}
+                        <div class="col-2">
+                            <a  href="/usuarios" class="btn btn-danger" style="background-color: red !important;" type="submit">Cancelar</a>
+                        </div>
+                        <div class="col-10">
+                            <button class="btn btn-primary" style="background-color: #1e73dc !important;" type="submit">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--<footer class="footer">
+                <div class="container-fluid">
+                    <nav class="float-left">
+                        <ul>
+                            <li>
+                                <a href="https://www.creative-tim.com">
+                                    Creative Tim
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="copyright float-right">
+                        &copy;
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>, made with <i class="material-icons">favorite</i> by
+                        <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+                    </div>
+                   your footer here 
+                </div>
+            </footer>-->
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</body>
+
+</html>
