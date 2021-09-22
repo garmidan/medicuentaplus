@@ -178,7 +178,7 @@
                                     <a href="/historiasclinicas/editarhistoriaclinica/{{hist.id}}" type="submit"
                                         style="background-color: #1e73dc; color: white;" class="btn btn-danger">Editar
                                         Historia</a>
-                                    <a type="button" href="/historiasclinicas/view"
+                                    <a type="button" onclick="generatepdf('{{hist.id}}');"
                                         style="background-color: #3c3c3c; color: white;"
                                         class="btn btn-primary">Visualizar Historia</a>
                                 </td>
@@ -350,45 +350,73 @@
         window.onunload = function () { null };
     </script>
     <script>
-        function generatepdf() {
-            var contando = 86;
-            var doc = new jsPDF();
-            var img = new Image();
-            img.src = '../../static/imagenes/medicuentaslogo.png';
-            doc.addImage(img, 'png', 10, 0, 70, 25)
-            doc.text("Historia Clinica", 80, 30);
-            doc.setFont("helvetica");
-            doc.setFontType("bold");
-            doc.setFontSize(10);
-            doc.line(206, 35, 2, 35);
-            doc.text("Tipo Documento:", 10, 42);
-            doc.text("Numero Documento:", 100, 42);
-            doc.text("Apellidos Pacientes:", 10, 50);
-            doc.text("Nombres Pacientes:", 100, 50);
-            doc.text("Fecha Nacimiento:", 10, 59);
-            doc.text("Edad:", 100, 59);
-            doc.text("Telefono:", 10, 68);
-            doc.text("Sexo:", 100, 68);
-            doc.text("Movil:", 10, 77);
-            doc.text("Correo:", 100, 77);
-            doc.line(206, 86, 2, 86);
+        function generatepdf(selecthistorial) {
+            console.log(selecthistorial);
+            var serviceEndpoint = "{% url 'historiasclinicas/view' %}";
+            $.ajax({
+                type: 'POST',
+                url: serviceEndpoint,
+                data: {
+                    selecthistorial: selecthistorial
+                },
+                success: function (data) {
+                    console.log(data.paciente);
+                    var doc = new jsPDF();
+                    var img = new Image();
+                    img.src = '../../static/imagenes/medicuentaslogo.png';
+                    doc.addImage(img, 'png', 10, 0, 70, 25)
+                    doc.text("Historia Clinica", 80, 30);
+                    doc.setFont("helvetica");
+                    doc.setFontType("bold");
+                    doc.setFontSize(10);
+                    doc.line(206, 35, 2, 35);
+                    data.paciente.forEach(dato => {
+                        doc.text("Tipo Documento: "+dato.tipodocumento, 10, 42);
+                        doc.text("Numero Documento: "+dato.numerodocumento, 100, 42);
+                        doc.text("Apellidos Pacientes: "+dato.apellidos, 10, 50);
+                        doc.text("Nombres Pacientes: "+dato.nombres, 100, 50);
+                        doc.text("Fecha Nacimiento: "+dato.fechanacimiento, 10, 59);
+                        doc.text("Edad: "+dato.edad, 100, 59);
+                        doc.text("Telefono: "+dato.telefono, 10, 68);
+                        doc.text("Sexo: "+dato.sexo, 100, 68);
+                        doc.text("Movil: "+dato.movil, 10, 77);
+                        doc.text("Correo: "+dato.correo, 100, 77);
+                    });
+                   
+                    doc.line(206, 86, 2, 86);
+                    data.historial.forEach(element => {
+                        var columns = [
+                            { title: "Fecha y hora de la consulta: "+element.fechaconsulta+" "+element.fechaalta, dataKey: "Dirigidoa" },
+                        ];
+                        var rows = [
+                            { Dirigidoa: "DIAGNOSTICO: "+element.diagnostico },
+                            { Dirigidoa: "TRATAMIENTO: "+element.tratamiento},
+                            {
+                                Dirigidoa: "OTROS DATOS DE INTERES: "+element.otrosdatos
+                            },
+                            {
+                                Dirigidoa: "NOTAS/OBSERVACIONES: "+element.observaciones
+                            }
+                        ];
+                        doc.autoTable(columns, rows, {
+                            startY: false,
+                            theme: 'grid',
+                            margin: { top: 90 },
+                            //tableWidth: 'auto', 
+                            columnWidth: 'wrap',
+                            showHeader: 'everyPage',
+                            columnStyles: {
+                                0: { columnWidth: '100' }
+                            },
+                            headerStyles: { theme: 'grid' },
+                            styles: { overflow: 'linebreak', columnWidth: '100', font: 'arial', fontSize: 10, cellPadding: 4, overflowColumns: 'linebreak' },
+                        });
+                    });
+                    doc.save('table.pdf');
+                    console.log(data.historial);
+                }
+            });
 
-
-            for (var i = 0; i < 3; i++) {
-                contando += 9;
-                doc.text("Consulta:" + "2021/12/12", 80, contando);
-                contando += 9;
-                doc.text("Fecha Consulta:", 10, contando);
-                doc.text("Hora Consulta:", 100, contando);
-                contando += 9;
-                doc.text("Diagnostico:", 10, contando);
-                contando += 9;
-                doc.text("Tratamiento:", 10, contando);
-                contando += 9;
-                var splitTitle = doc.splitTextToSize("Otros Datos Interes" + text, 180);
-                doc.text(10, contando, splitTitle);
-                console.log(contando);
-            }
         }
     </script>
 </body>

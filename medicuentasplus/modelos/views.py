@@ -688,7 +688,19 @@ def eliminarcita(request,id1citas):
     citadelete.delete()
     return redirect('/citas') 
 
+@csrf_exempt
 def historialviewpdf(request):
-    return render(request,'Prueba.html')
+    if request.session.get('validar') == False:
+        return redirect('/')
+    else: 
+        if request.method == 'POST':
+            historial = HistoriasClinica.objects.get(id=request.POST.get("selecthistorial"))
+            paciente = Paciente.objects.filter(id=historial.paciente.id).values()
+            consultas = Consulta.objects.filter(historiaclinicas=historial).values()
+            return JsonResponse({
+                "success": True,
+                "historial":list(consultas),
+                "paciente":list(paciente)
+            })
 
 

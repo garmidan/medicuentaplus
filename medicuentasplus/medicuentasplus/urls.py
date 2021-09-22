@@ -44,7 +44,7 @@ urlpatterns = [
     path('historiasclinicas/historialregistrarconsulta/<int:idhistoria>',historialregistrar),
     path('historiasclinicas/detallehistoria/<int:id>',verhistoriaclinica),
     path('historiasclinicas',historiaclinica),
-    path('historiasclinicas/view',historialviewpdf),
+    path('historiasclinicas/view',historialviewpdf, name="historiasclinicas/view"),
     path('historiasclinicas/nuevahistoria/<int:idpaciente>',guardarhistoriaclinica),
     path('historiasclinicas/editarhistoriaclinica/<int:idhis>',editarhistoriaclinica),
     path('historiasclinicas/editarhistoriaclinicasa/<int:id1>/<int:id2>',edithistori),

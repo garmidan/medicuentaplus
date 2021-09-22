@@ -216,6 +216,10 @@
                             <div class="col-md-4">
                                 <label for="validationDefault01" class="form-label">Fecha Cita</label>
                                 <input type="date" class="form-control" name="fechacita" id="fechacita"  onchange="calcularEdad();" required>
+                                <script>
+                                    let fechacita = document.getElementById('fechacita');
+                                    fechacita.min = new Date().toISOString().split("T")[0];
+                                </script>
                             </div>
                             <div class="col-md-4">
                                 <label for="validationDefault01" class="form-label">Hora Cita</label>
