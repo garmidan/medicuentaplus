@@ -94,7 +94,6 @@ def registarprestador(request):
                         print("Si tiene prestador"+asi.primernombre)
                     else:
                         asistentes.append(asi.primernombre+"-"+asi.usuario)
-                print(asistentes)
             especialidad = Especialidad.objects.all()
             ciudad = Ciudad.objects.all()
             tipodocumento = ["CEDULA DE CIUDADANIA","CEDULA DE EXTRANJERIA","TARJETA DE IDENTIDAD","REGISTRO CIVIL","PASAPORTE","MENOR SIN IDENTIFICACION","ADULTO SIN IDENTIDAD"]
