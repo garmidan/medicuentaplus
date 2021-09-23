@@ -66,7 +66,12 @@ class Cita(models.Model):
 
 class HistoriasClinica(models.Model):
     paciente =  models.ForeignKey(Paciente, on_delete=models.CASCADE, blank=True,null=True)
-    
+
+
+class Diagnostico(models.Model):
+    codigo = models.CharField(max_length=1000, blank=True, null=True)
+    diagnostico = models.CharField(max_length=1000, blank=True, null=True)    
+
 class Consulta(models.Model):
     historiaclinicas = models.ForeignKey(HistoriasClinica, on_delete=models.CASCADE, blank=True,null=True)
     fechaconsulta = models.DateField(blank=True, null=True)
@@ -75,3 +80,4 @@ class Consulta(models.Model):
     tratamiento = models.TextField(blank=True, null=True)
     otrosdatos = models.TextField(blank=True, null=True)
     observaciones = models.TextField(blank=True, null=True)
+

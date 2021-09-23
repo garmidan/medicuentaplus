@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, HistoriasClinica, Usuario, Ciudad, Especialidad, Cita, Paciente, Consulta
+from .models import CustomUser, HistoriasClinica, Usuario, Ciudad, Especialidad, Cita, Paciente, Consulta, Diagnostico
 from django.contrib.auth.models import Group
 
 admin.site.unregister(Group)
@@ -64,4 +64,4 @@ admin.site.register(Especialidad)
 admin.site.register(Cita)
 admin.site.register(Paciente)
 admin.site.register(Consulta)
-
+admin.site.register(Diagnostico)

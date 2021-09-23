@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from cryptography.fernet import Fernet
-from modelos.models import Usuario, Especialidad, Ciudad, Cita, Entidad, HistoriasClinica, Paciente, Consulta
+from modelos.models import Usuario, Especialidad, Ciudad, Cita, Entidad, HistoriasClinica, Paciente, Consulta, Diagnostico
 import base64
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse 
@@ -516,6 +516,7 @@ def guardarhistoriaclinica(request,idpaciente):
     else:
         if request.session.get('user'):
             usuario = Usuario.objects.get(id=request.session.get('user'))
+            diagnosticos = Diagnostico.objects.all()
             if usuario.rol == "Administrador" or usuario.rol == "Prestador":
                 if request.method == "POST":
                     pacientico = Paciente.objects.get(id=idpaciente)
@@ -536,7 +537,7 @@ def guardarhistoriaclinica(request,idpaciente):
                     )
                     consultaregister.save()
                     print("Consulta registrada")
-                return render(request,"nuevahistoria.html",{"usuario":usuario,"sesion":request.session.get('validar')})
+                return render(request,"nuevahistoria.html",{"usuario":usuario,"sesion":request.session.get('validar'),"diagnosticos":diagnosticos})
             else:
                 return redirect('/dashboard')
         else:
@@ -548,6 +549,7 @@ def historiaclinica(request):
         return redirect('/')
     else:
         if request.session.get('user'):
+            diagnosticos = Diagnostico.objects.all()
             usuario = Usuario.objects.get(id=request.session.get('user'))
             validacion = 0
             pacientes = Paciente.objects.all()
@@ -559,16 +561,17 @@ def historiaclinica(request):
                     if HistoriasClinica.objects.filter(paciente=paciente).exists():
                         validacion = 3
                     else:
-                        return render(request,"nuevahistoria.html",{"paciente":paciente,"usuario":usuario,"sesion":request.session.get('validar')})
+                        return render(request,"nuevahistoria.html",{"paciente":paciente,"usuario":usuario,"sesion":request.session.get('validar'),"diagnosticos":diagnosticos})
                 else:
                     validacion = 2
-            return render(request,"historiasclinicas.html",{"usuario":usuario,"pacientes":pacientes,"historiaclinica":historiaclinica,"validacion":validacion,"sesion":request.session.get('validar')})
+            return render(request,"historiasclinicas.html",{"usuario":usuario,"pacientes":pacientes,"historiaclinica":historiaclinica,"validacion":validacion,"sesion":request.session.get('validar'),"diagnosticos":diagnosticos})
         else:
             return redirect('/')
    
 
 def verhistoriaclinica(request,id):
     historiaclinica = HistoriasClinica.objects.get(id=idhistoria)
+    
     return render(request,"detallehistoriasclinicas.html",{"historiaclinica":historiaclinica,"sesion":request.session.get('validar')})
 
 def historialregistrar(request,idhistoria):
@@ -576,6 +579,7 @@ def historialregistrar(request,idhistoria):
         return redirect('/')
     else:
         if request.session.get('user'):
+            diagnosticos = Diagnostico.objects.all()
             usuario = Usuario.objects.get(id=request.session.get('user'))
             if usuario.rol == "Administrador" or usuario.rol == "Prestador":
                 d2 = 0
@@ -613,7 +617,7 @@ def historialregistrar(request,idhistoria):
                 else:
                     for con in consultas:
                         consultas = Consulta.objects.get(id=con.id)
-                return render(request,"historialregistrar.html",{"usuario":usuario,"paciente":historiaclinica,"consulta":consultas,"validar":validar,"sesion":request.session.get('validar')})
+                return render(request,"historialregistrar.html",{"usuario":usuario, "diagnosticos":diagnosticos, "paciente":historiaclinica,"consulta":consultas,"validar":validar,"sesion":request.session.get('validar')})
             else:
                 return redirect('/dashboard')
         else:
@@ -633,6 +637,7 @@ def editarhistoriaclinica(request,idhis):
         return redirect('/')
     else:
         if request.session.get('user'):
+            diagnosticos = Diagnostico.objects.all()
             usuario = Usuario.objects.get(id=request.session.get('user'))
             if usuario.rol == "Administrador" or usuario.rol == "Prestador":
                 historiaclinica = HistoriasClinica.objects.get(id=idhis)
@@ -667,7 +672,7 @@ def editarhistoriaclinica(request,idhis):
                             if  Consulta.objects.filter(id=co.id, fechaconsulta= fecha1registro2).exists():
                                 registro2consulta = Consulta.objects.get(id=co.id, fechaconsulta= fecha1registro2)
                     consultas=[]
-                    return render(request,'editarhistoria.html',{"usuario":usuario,"edit1":registro1consulta,"edit2":registro2consulta,"consultas":consultas,"paciente":histori,"sesion":request.session.get('validar')})
+                    return render(request,'editarhistoria.html',{"usuario":usuario, "diagnosticos":diagnosticos, "edit1":registro1consulta,"edit2":registro2consulta,"consultas":consultas,"paciente":histori,"sesion":request.session.get('validar')})
                 else:
                     if request.method == "POST":
                         for editcon in consultas:
@@ -684,7 +689,7 @@ def editarhistoriaclinica(request,idhis):
                             validar = 1
                             print("Editado correctamente")
                             consultas = Consulta.objects.filter(historiaclinicas=historiaclinica)
-                    return render(request,'editarhistoria.html',{"usuario":usuario,"consultas":consultas,"paciente":histori,"validar":validar,"sesion":request.session.get('validar')})
+                    return render(request,'editarhistoria.html',{"usuario":usuario, "diagnosticos":diagnosticos, "consultas":consultas,"paciente":histori,"validar":validar,"sesion":request.session.get('validar')})
             else:
                 return redirect('/dashboard')
         else:

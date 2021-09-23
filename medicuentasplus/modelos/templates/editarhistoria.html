@@ -202,7 +202,14 @@
                         </div>
                         <div class="col-md-12">
                             <div style="margin-bottom: 10px; margin-top: 10px;">
-                                <p><b>Diagnostico:</b> <input type="text" style="width: 76%;" value="{{co.diagnostico}}" name="diagnosticico{{co.id}}" /></p>
+                                <p><b>Diagnostico:</b>
+                                    <input list="brow" name="diagnosticico{{co.id}}" style="width: 76%;">
+                                    <datalist id="brow">
+                                        <option value="{{co.diagnostico}}">
+                                        {%for dia in diagnosticos%}
+                                      <option value="{{dia.diagnostico}}">
+                                          {%endfor%}
+                                    </datalist></p>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -257,7 +264,14 @@
                         </div>
                         <div class="col-md-12">
                             <div style="margin-bottom: 10px; margin-top: 10px;">
-                                <p><b>Diagnostico:</b> <input type="text" style="width: 76%;" value="{{edit1.diagnostico}}" name="diagnostico1" /></p>
+                                <p><b>Diagnostico:</b>
+                                    <input list="brow" name="diagnostico1" style="width: 76%;">
+                                    <datalist id="brow">
+                                        <option value="{{edit1.diagnostico}}">
+                                        {%for dia in diagnosticos%}
+                                      <option value="{{dia.diagnostico}}">
+                                          {%endfor%}
+                                    </datalist></p>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -299,7 +313,14 @@
                         </div>
                         <div class="col-md-12">
                             <div style="margin-bottom: 10px; margin-top: 10px;">
-                                <p><b>Diagnostico:</b> <input type="text" style="width: 76%;" value="{{edit2.diagnostico}}" name="diagnostico2" /></p>
+                                <p><b>Diagnostico:</b>
+                                    <input list="brow" name="diagnostico2" style="width: 76%;">
+                                    <datalist id="brow">
+                                        <option value="{{edit2.diagnostico}}">
+                                        {%for dia in diagnosticos%}
+                                      <option value="{{dia.diagnostico}}">
+                                          {%endfor%}
+                                    </datalist></p>
                             </div>
                         </div>
                         <div class="col-md-12">
