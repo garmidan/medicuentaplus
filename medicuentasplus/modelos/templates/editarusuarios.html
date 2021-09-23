@@ -102,6 +102,11 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="/cambiocontraseña/{{usuario.id}}">
+                                    Cambiar Contraseña
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="/logout">
                                     Cerrar Sesion
                                 </a>
@@ -220,10 +225,7 @@
                             <select class="form-control" name="asistente">
                             <option selected value="{{useredit.id}}">{{useredit.asistente}}</option>
                             {% for asi in asistente%}
-                            {% if asi.primernombre|add:"-"|add:asi.usuario == useredit.asistente%}
-                            {%else%}
-                            <option value="{{asi.id}}">{{asi.primernombre}} - {{asi.usuario}}</option>
-                            {%endif%}
+                                <option value="{{asi}}">{{asi}}</option>
                             {% endfor %}
                             </select>
                         </div>

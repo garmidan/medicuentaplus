@@ -83,9 +83,18 @@ def registarprestador(request):
         return redirect('/')
     else: 
         validar = 0
+        asistentes = []
+        asistente = []
         usuario = Usuario.objects.get(id=request.session.get('user'))
         if usuario.rol == "Administrador":
-            asistente = Usuario.objects.filter(rol="Asistente")
+            if Usuario.objects.filter(rol="Asistente").exists():
+                asistente = Usuario.objects.filter(rol="Asistente")
+                for asi in asistente:
+                    if Usuario.objects.filter(asistente=asi.primernombre+"-"+asi.usuario).exists():
+                        print("Si tiene prestador"+asi.primernombre)
+                    else:
+                        asistentes.append(asi.primernombre+"-"+asi.usuario)
+                print(asistentes)
             especialidad = Especialidad.objects.all()
             ciudad = Ciudad.objects.all()
             tipodocumento = ["CEDULA DE CIUDADANIA","CEDULA DE EXTRANJERIA","TARJETA DE IDENTIDAD","REGISTRO CIVIL","PASAPORTE","MENOR SIN IDENTIFICACION","ADULTO SIN IDENTIDAD"]
@@ -93,7 +102,7 @@ def registarprestador(request):
             if request.method == 'POST':
                 if Usuario.objects.filter(usuario = request.POST.get("correo")).exists() or Usuario.objects.filter(numerodocumento = request.POST.get("numerodoc")).exists():
                     validar = 2
-                    return render(request,'prestador.html',{"usuario":usuario,"asistentes":asistente,"especialidad":especialidad,"ciudad":ciudad,"tipodocumento":tipodocumento,"sexo":sexo,"sesion":request.session.get('validar'),"validar":validar})
+                    return render(request,'prestador.html',{"usuario":usuario,"asistentes":asistentes,"especialidad":especialidad,"ciudad":ciudad,"tipodocumento":tipodocumento,"sexo":sexo,"sesion":request.session.get('validar'),"validar":validar})
                 ciudadselcect = Ciudad.objects.get(id=request.POST.get("ciudad"))
                 especialidadselect = Especialidad.objects.get(id=request.POST.get("especialidad"))
                 clave = request.POST.get("clave")
@@ -123,7 +132,7 @@ def registarprestador(request):
                 usuario.save()
                 validar = 1
             #mystr_encoded = base64.b64encode(mystr.encode('utf-8'))
-            return render(request,'prestador.html',{"usuario":usuario,"asistentes":asistente,"especialidad":especialidad,"ciudad":ciudad,"tipodocumento":tipodocumento,"sexo":sexo,"sesion":request.session.get('validar'),"validar":validar})
+            return render(request,'prestador.html',{"usuario":usuario,"asistentes":asistentes,"especialidad":especialidad,"ciudad":ciudad,"tipodocumento":tipodocumento,"sexo":sexo,"sesion":request.session.get('validar'),"validar":validar})
         else:
             return redirect('/dashboard')
         
@@ -356,6 +365,8 @@ def editarusuarios(request, iduser):
         return redirect('/')
     else:
         if request.session.get('user'):
+            asistente = []
+            asistentes = []
             usuario = Usuario.objects.get(id=request.session.get('user'))
             if usuario.rol == "Administrador":
                 tipodocumento = ["CEDULA DE CIUDADANIA","CEDULA DE EXTRANJERIA","TARJETA DE IDENTIDAD","REGISTRO CIVIL","PASAPORTE","MENOR SIN IDENTIFICACION","ADULTO SIN IDENTIDAD"]
@@ -375,25 +386,31 @@ def editarusuarios(request, iduser):
                         especialidad = Especialidad.objects.get(id = request.POST.get("especialidad"))
                         editusuario.especialidad = especialidad
                         editusuario.consultorio = request.POST.get("consultorio")
-                        asite = Usuario.objects.get(id=request.POST.get("asistente"))
-                        editusuario.asistente = asite.primernombre+"-"+asite.usuario
+                        editusuario.asistente = request.POST.get("asistente")
                     elif editusuario.rol == "Asistente":
-                        print(editusuario.primernombre)
-                        print(editusuario.usuario)
-                        pres = Usuario.objects.get(asistente=editusuario.primernombre+"-"+editusuario.usuario)
-                        pres.asistente = request.POST.get("primerN")+"-"+request.POST.get("correo")
-                        pres.save()
+                        if Usuario.objects.filter(asistente=editusuario.primernombre+"-"+editusuario.usuario).exists():
+                            pres = Usuario.objects.get(asistente=editusuario.primernombre+"-"+editusuario.usuario)
+                            pres.asistente = request.POST.get("primerN")+"-"+request.POST.get("correo")
+                            pres.save()
                     editusuario.primernombre = request.POST.get("primerN")
                     editusuario.usuario = request.POST.get("correo")
                     editusuario.save()
                     return redirect('/usuarios')
                 else:     
+                    if Usuario.objects.filter(rol="Asistente").exists():
+                        asistente = Usuario.objects.filter(rol="Asistente")
+                        for asi in asistente:
+                            if Usuario.objects.filter(asistente=asi.primernombre+"-"+asi.usuario).exists():
+                                print("")
+                            else:
+                                asistentes.append(asi.primernombre+"-"+asi.usuario)
+                    print(asistentes)
                     asistente = Usuario.objects.filter(rol="Asistente")
                     print(asistente.count())
                     especialidad = Especialidad.objects.all()
                     ciudad = Ciudad.objects.all()
                     useredit = Usuario.objects.get(id=iduser)
-                    return render(request,"editarusuarios.html",{"usuario":usuario,"useredit":useredit,"asistente":asistente,"especialidad":especialidad,"ciudad":ciudad,"tipodocumento":tipodocumento,"sexo":sexo,"sesion":request.session.get('validar')})
+                    return render(request,"editarusuarios.html",{"usuario":usuario,"useredit":useredit,"asistente":asistentes,"especialidad":especialidad,"ciudad":ciudad,"tipodocumento":tipodocumento,"sexo":sexo,"sesion":request.session.get('validar')})
             else:
                 return redirect('/dashboard')
         else:
@@ -763,3 +780,37 @@ def bloquearobservaciones(request,asis):
         val +=1
     val = 0
     return redirect('/dashboard')
+
+#Cambiar Contraseña 
+def cambiocontraseña(request,iduser):
+    if request.session.get('validar') == False:
+        return redirect('/')
+    else:
+        if request.session.get('user'):
+            validar =  0
+            usuario = Usuario.objects.get(id=request.session.get('user'))
+            if request.method == "POST":
+                usuario = Usuario.objects.get(id=iduser)
+                clave = request.POST.get("conantigua")
+                base64_message = usuario.clave
+                base64_bytes = base64_message.encode('ascii')
+                message_bytes = base64.b64decode(base64_bytes)
+                message = message_bytes.decode('ascii')
+                if clave == message:
+                    if request.POST.get("connueva") == request.POST.get("conconfirmar"):
+                        clave = request.POST.get("conconfirmar")
+                        message_bytes = clave.encode('ascii')
+                        base64_bytes = base64.b64encode(message_bytes)
+                        base64_message = base64_bytes.decode('ascii')
+                        usuario.clave = base64_message
+                        usuario.save()
+                        validar = 3
+                    else:
+                        validar = 2
+                else:
+                    validar = 1
+            return render(request,"cambiocontraseña.html",{"usuario":usuario,"validar":validar})
+        else:
+            return redirect('/')
+    
+    

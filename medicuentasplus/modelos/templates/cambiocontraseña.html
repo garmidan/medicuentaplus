@@ -110,78 +110,68 @@
             </nav>
             <!-- End Navbar -->
             <div class="content">
-                <div class="position-absolute w-100 row">
-                    <div style="font-family: 'Alegreya Sans SC'; margin-left: 200px;" class="col-lg-2">
-                        <img _ngcontent-xhe-c207="" src="{% static 'imagenes/profile.png'%}" width="64" height="64" alt="Profile Image" class="ml-2 mr-4">
+                <h2 class="mb-4">Cambio de contraseña</h2>
+                <h5 class="mb-4">Por favor, ingrese su contraseña antigua, por seguridad, y después introduzca la nueva contraseña dos veces para verificar que la ha escrito correctamente.</h5>
+                <form method="POST" action="/cambiocontraseña/{{usuario.id}}">
+                    {% csrf_token %}
+                {% if validar == 3%}
+                    <div id="alerta" class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                        <strong>Cambio de contraseña exitoso</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                    <div style="font-family: 'Alegreya Sans SC'; margin-left: -80px;" class="col-lg-2">
-                        <div><h4>{{usuario.primernombre}} {{usuario.primerapellido}}</h4></div>
-                        <div><h6>{{usuario.rol}}</h6></div>
+                {%endif%}
+                <div class="row">
+                    <div class="col-md-2">
+                        <p>Contraseña antigua: </p>
                     </div>
-                    
-                    <div class="row">
-                        <div style="font-family: 'Alegreya Sans SC'; margin-left: 220px; margin-top: 20px;" class="col-lg-6">
-                           <p>Informacion</p>
-                        </div>
-                        <div style="font-family: 'Alegreya Sans SC'; margin-top: 20px;" class="col-lg-2">
-                            <p>Contacto</p>
-                        </div>
-                    </div>
-                    <hr style="width: 70%; margin-left: 230px;"/>
-                    <div class="row">
-                        <div style="font-family: 'Alegreya Sans SC'; margin-left: 220px; margin-top: 5px;" class="col-lg-5">
-                            
-                            <div>
-                               <p style="font-weight: bold;">Primer Nombre: {{usuario.primernombre}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Segundo Nombre: {{usuario.segundonombre}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Primer Apellido: {{usuario.primerapellido}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Segundo Apellido: {{usuario.segundoapellido}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Sexo: {{usuario.sexo}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Especialidad: {{usuario.especialidad.especialidad}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Ciudad: {{usuario.ciudad.ciudad}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Tipo Documento: {{usuario.tipodocumento}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Documento: {{usuario.numerodocumento}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Rol: {{usuario.rol}}</p>
-                            </div>
-                        </div>
-                        <div style="font-family: 'Alegreya Sans SC'; margin-top: 5px;" class="col-lg-3">
-                            <div>
-                                <p style="font-weight: bold;">Numero Telefono: {{usuario.numerotelefono}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Correo: {{usuario.usuario}}</p>
-                            </div>
-                            {%if usuario.rol == 'Asistente'%}
-                            <div>
-                                <p style="font-weight: bold;">Prestador: {{prestador.primerapellido}} {{prestador.primernombre}}</p>
-                            </div>
-                            {%endif%}
-                            {%if usuario.rol == 'Prestador'%}
-                            <div>
-                                <p style="font-weight: bold;">Asistente: {{usuario.asistente}} {%if usuario.permisoscomentario == 'Si'%}<a href="/bloqueo/{{usuario.asistente}}" class="btn btn-danger" style="color: #fff;">Bloquear Observaciones</a>{%else%}<a href="/bloqueo/{{usuario.asistente}}" class="btn btn-success" style="color: #fff;">Desbloquear Observaciones</a>{%endif%}</p>
-                            </div>
-                            {%endif%}
-                        </div>
+                    <div class="col-md-4">
+                        {%if validar == 1%}
+                            <p style="color: red;">Su contraseña antigua es incorrecta. Por favor, vuelva a introducirla.</p>
+                        {%endif%}
+                        
+                        <input type="password" name="conantigua" required style="border: 1px solid #ccc;
+                        border-radius: 4px;
+                        padding: 5px 6px;
+                        margin-top: 0;"/>
                     </div>
                 </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-md-2">
+                        <p>Contraseña nueva: </p>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="password" name="connueva" required style="border: 1px solid #ccc;
+                        border-radius: 4px;
+                        padding: 5px 6px;
+                        margin-top: 0;"/>
+                        <p>
+                            Su contraseña no puede asemejarse tanto a su otra información personal.
+                            Su contraseña debe contener por lo menos 8 caracteres.
+                            La contraseña no puede ser una contraseña de uso común.
+                            Su contraseña no puede ser completamente numérica.
+                        </p>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-md-2">
+                        <p>Contraseña nueva (confirmación): </p>
+                    </div>
+                    <div class="col-md-4">
+                        {%if validar == 2%}
+                            <p style="color: red;">Los dos campos de contraseña no coinciden.</p>
+                        {%endif%}
+                        <input type="password" required name="conconfirmar" style="border: 1px solid #ccc;
+                        border-radius: 4px;
+                        padding: 5px 6px;
+                        margin-top: 0;"/>
+                    </div>
+                </div>
+                <div style="margin-left: 1400px;" class="mb-4">
+                    <button type="submit" class="btn btn-primary" style="background-color: #1e73dc;">CAMBIAR MI CONTRASEÑA</button>
+                </div>
+            </form>
             </div>
         </div>
     </div>
