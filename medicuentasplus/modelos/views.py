@@ -38,9 +38,18 @@ def login(request):
             message = message_bytes.decode('ascii')
             if clave == message:
                 if usuario.estado == "Activo":
-                    request.session['validar'] = True
-                    request.session['user'] = usuario.id
-                    return redirect('/dashboard')
+                    if usuario.rol == "Asistente":
+                        if Usuario.objects.filter(asistente=usuario.primernombre+"-"+usuario.usuario).exists():
+                            request.session['validar'] = True
+                            request.session['user'] = usuario.id
+                            return redirect('/dashboard')
+                        else:
+                            validar = 3
+                            return render(request,'login.html',{"validar":validar,"sesion":request.session.get('validar')})
+                    elif usuario.rol != "Asistente":
+                        request.session['validar'] = True
+                        request.session['user'] = usuario.id
+                        return redirect('/dashboard')
                 else:
                     validar = 2
                     return render(request,'login.html',{"validar":validar,"sesion":request.session.get('validar')})
