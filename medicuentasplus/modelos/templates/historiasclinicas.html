@@ -191,10 +191,21 @@
                                     <a href="/historiasclinicas/editarhistoriaclinica/{{hist.id}}" type="submit"
                                         style="background-color: #1e73dc; color: white;" class="btn btn-danger">Editar
                                         Historia</a>
-
+                                    <a type="button" onclick="generatepdf('{{hist.id}}');"
+                                        style="background-color: #3c3c3c; color: white;"
+                                        class="btn btn-primary">Visualizar Historia</a>
                                 </td>
                                 {%endif%}
+                                {% if usuario.rol == 'Asistente'%}
+                                <td>
+                                    <a type="button" onclick="generatepdf('{{hist.id}}');"
+                                        style="background-color: #3c3c3c; color: white;"
+                                        class="btn btn-primary">Visualizar Historia</a>
+                                </td>
                                 {%endif%}
+
+                                {%endif%}
+
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -338,7 +349,8 @@
                     { "data": "Tipo Documento" },
                     { "data": "No Documento" },
                     { "data": "Nombres" },
-                    { "data": "Apellidos" }
+                    { "data": "Apellidos" },
+                    { "data": "" }
                 ]
             });
         });
@@ -351,7 +363,6 @@
     </script>
     <script>
         function generatepdf(selecthistorial) {
-            console.log(selecthistorial);
             var serviceEndpoint = "{% url 'historiasclinicas/view' %}";
             $.ajax({
                 type: 'POST',
@@ -360,7 +371,13 @@
                     selecthistorial: selecthistorial
                 },
                 success: function (data) {
-                    console.log(data.paciente);
+                    var permisos = "";
+                    if (data.valida == true) {
+                        data.usuari.forEach(dat => {
+                            permisos = dat.permisoscomentario;
+                        });
+                    }
+                    var documento = "";
                     var doc = new jsPDF();
                     var img = new Image();
                     img.src = '../../static/imagenes/medicuentaslogo.png';
@@ -371,33 +388,58 @@
                     doc.setFontSize(10);
                     doc.line(206, 35, 2, 35);
                     data.paciente.forEach(dato => {
-                        doc.text("Tipo Documento: "+dato.tipodocumento, 10, 42);
-                        doc.text("Numero Documento: "+dato.numerodocumento, 100, 42);
-                        doc.text("Apellidos Pacientes: "+dato.apellidos, 10, 50);
-                        doc.text("Nombres Pacientes: "+dato.nombres, 100, 50);
-                        doc.text("Fecha Nacimiento: "+dato.fechanacimiento, 10, 59);
-                        doc.text("Edad: "+dato.edad, 100, 59);
-                        doc.text("Telefono: "+dato.telefono, 10, 68);
-                        doc.text("Sexo: "+dato.sexo, 100, 68);
-                        doc.text("Movil: "+dato.movil, 10, 77);
-                        doc.text("Correo: "+dato.correo, 100, 77);
+                        documento = dato.numerodocumento;
+                        doc.text("Tipo Documento: " + dato.tipodocumento, 10, 42);
+                        doc.text("Numero Documento: " + dato.numerodocumento, 100, 42);
+                        doc.text("Apellidos Pacientes: " + dato.apellidos, 10, 50);
+                        doc.text("Nombres Pacientes: " + dato.nombres, 100, 50);
+                        doc.text("Fecha Nacimiento: " + dato.fechanacimiento, 10, 59);
+                        doc.text("Edad: " + dato.edad, 100, 59);
+                        doc.text("Telefono: " + dato.telefono, 10, 68);
+                        doc.text("Sexo: " + dato.sexo, 100, 68);
+                        doc.text("Movil: " + dato.movil, 10, 77);
+                        doc.text("Correo: " + dato.correo, 100, 77);
                     });
-                   
+
                     doc.line(206, 86, 2, 86);
                     data.historial.forEach(element => {
                         var columns = [
-                            { title: "Fecha y hora de la consulta: "+element.fechaconsulta+" "+element.fechaalta, dataKey: "Dirigidoa" },
+                            { title: "Fecha y hora de la consulta: " + element.fechaconsulta + " " + element.fechaalta, dataKey: "Dirigidoa" },
                         ];
-                        var rows = [
-                            { Dirigidoa: "DIAGNOSTICO: "+element.diagnostico },
-                            { Dirigidoa: "TRATAMIENTO: "+element.tratamiento},
-                            {
-                                Dirigidoa: "OTROS DATOS DE INTERES: "+element.otrosdatos
-                            },
-                            {
-                                Dirigidoa: "NOTAS/OBSERVACIONES: "+element.observaciones
+                        if (permisos != "") {
+                            if (permisos == "Si") {
+                                var rows = [
+                                    { Dirigidoa: "DIAGNOSTICO: " + element.diagnostico },
+                                    { Dirigidoa: "TRATAMIENTO: " + element.tratamiento },
+                                    {
+                                        Dirigidoa: "OTROS DATOS DE INTERES: " + element.otrosdatos
+                                    },
+                                    {
+                                        Dirigidoa: "NOTAS/OBSERVACIONES: " + element.observaciones
+                                    }
+                                ];
+                            } else {
+                                var rows = [
+                                    { Dirigidoa: "DIAGNOSTICO: " + element.diagnostico },
+                                    { Dirigidoa: "TRATAMIENTO: " + element.tratamiento },
+                                    {
+                                        Dirigidoa: "OTROS DATOS DE INTERES: " + element.otrosdatos
+                                    }
+                                ];
                             }
-                        ];
+                        } else {
+                            var rows = [
+                                { Dirigidoa: "DIAGNOSTICO: " + element.diagnostico },
+                                { Dirigidoa: "TRATAMIENTO: " + element.tratamiento },
+                                {
+                                    Dirigidoa: "OTROS DATOS DE INTERES: " + element.otrosdatos
+                                },
+                                {
+                                    Dirigidoa: "NOTAS/OBSERVACIONES: " + element.observaciones
+                                }
+                            ];
+                        }
+
                         doc.autoTable(columns, rows, {
                             startY: false,
                             theme: 'grid',
@@ -412,7 +454,7 @@
                             styles: { overflow: 'linebreak', columnWidth: '100', font: 'arial', fontSize: 10, cellPadding: 4, overflowColumns: 'linebreak' },
                         });
                     });
-                    doc.save('table.pdf');
+                    doc.save('historiaclinica' + documento + '.pdf');
                     console.log(data.historial);
                 }
             });

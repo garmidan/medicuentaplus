@@ -120,7 +120,7 @@
                             <input type="text" class="form-control" value="{{useredit.primernombre}}" id="validationDefault01" name="primerN" placeholder="Primer Nombre" required>
                         </div>
                         <div class="col-md-3">
-                            <input type="text" class="form-control" id="validationDefault02" value="{{useredit.segundonombre}}" name="segundoN" placeholder="Segundo Nombre" required>
+                            <input type="text" class="form-control" id="validationDefault02" value="{{useredit.segundonombre}}" name="segundoN" placeholder="Segundo Nombre" >
                         </div>
                         <div class="col-md-3">
                             <input type="text" value="{{useredit.primerapellido}}"  class="form-control" id="validationDefault01" name="primerA" placeholder="Primer Apellido"  required>
@@ -130,7 +130,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="input-group">
-                                <input type="email" value="{{useredit.usuario}}" disabled name="correo" class="form-control" id="validationDefaultUsername"
+                                <input type="email" value="{{useredit.usuario}}" name="correo" class="form-control" id="validationDefaultUsername"
                                     aria-describedby="inputGroupPrepend2" placeholder="Correo" required>
                             </div>
                         </div>
@@ -179,7 +179,7 @@
                         <div class="col-md-4">
                             <div class="input-group">
                                 <input type="number" value="{{useredit.numerotelefono}}" name="telefono" class="form-control" id="validationDefaultUsername"
-                                    aria-describedby="inputGroupPrepend2" placeholder="No Telefono" required>
+                                    aria-describedby="inputGroupPrepend2" placeholder="No Telefono">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -229,7 +229,7 @@
                         </div>
                         {%endif%}
                         <div class="col-2">
-                            <a  href="/usuarios" class="btn btn-danger" style="background-color: red !important;" type="submit">Cancelar</a>
+                            <a  href="/usuarios" class="btn btn-danger" style="background-color: red !important;" type="submit">Volver</a>
                         </div>
                         <div class="col-10">
                             <button class="btn btn-primary" style="background-color: #1e73dc !important;" type="submit">Guardar</button>

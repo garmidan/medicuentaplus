@@ -33,6 +33,7 @@ class Usuario(models.Model):
     especialidad = models.ForeignKey(Especialidad, on_delete=models.CASCADE,blank=True, null=True) 
     rol = models.CharField(max_length=500, blank=True , null=True)
     asistente = models.CharField(max_length=500, blank=True, null= True)
+    permisoscomentario = models.CharField(max_length=100, blank=True, null= True)
     sexo = models.CharField(max_length=500, blank=True, null= True)
     consultorio = models.CharField(max_length=500, blank=True, null= True)
     estado = models.CharField(max_length=500, blank=True, null= True)

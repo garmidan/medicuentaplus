@@ -113,6 +113,18 @@
             </nav>
             <!-- End Navbar -->
             <div class="content">
+                {% if validar == 1%}
+                <div id="alerta" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>El prestador ha sido registrado satisfactioriamente</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {%endif%}
+                {% if validar == 2%}
+                <div id="alerta" class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>El usuario ya existe</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {%endif%}
                 <div>
                     <form class="row g-3" method="POST" action="/usuarios/registrarprestador">
                         {% csrf_token %}
@@ -123,7 +135,7 @@
                             <input type="text" class="form-control" id="validationDefault01" name="primerN" placeholder="Primer Nombre" required>
                         </div>
                         <div class="col-md-3">
-                            <input type="text" class="form-control" id="validationDefault02" name="segundoN" placeholder="Segundo Nombre" required>
+                            <input type="text" class="form-control" id="validationDefault02" name="segundoN" placeholder="Segundo Nombre" >
                         </div>
                         <div class="col-md-3">
                             <input type="text" class="form-control" id="validationDefault01" name="primerA" placeholder="Primer Apellido"  required>
@@ -174,7 +186,7 @@
                         <div class="col-md-4">
                             <div class="input-group">
                                 <input type="number" name="telefono" class="form-control" id="validationDefaultUsername"
-                                    aria-describedby="inputGroupPrepend2" placeholder="No Telefono" required>
+                                    aria-describedby="inputGroupPrepend2" placeholder="No Telefono">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -210,7 +222,7 @@
                             </select>
                         </div>
                         <div class="col-2">
-                            <a  href="/usuarios" class="btn btn-danger" style="background-color: red !important;" type="submit">Cancelar</a>
+                            <a  href="/usuarios" class="btn btn-danger" style="background-color: red !important;" type="submit">Volver</a>
                         </div>
                         <div class="col-10">
                             <button class="btn btn-primary" style="background-color: #1e73dc !important;" type="submit">Registrar</button>

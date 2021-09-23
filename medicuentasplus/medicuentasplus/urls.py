@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from modelos.views import dashboard, login, historialviewpdf, eliminarcita, deleteentidad, entidad, registrarcitapacienteregister,edithistori, editarhistoriaclinica, logout, usuarios, guardarhistoriaclinica, verhistoriaclinica, historiaclinica, registarprestador,historialregistrar, citas, registracita, especialidadseleccionada, citasdetalles, editarusuarios, inactivarusuario, registarasistente, maestros,especialidades, deleteespecialidades, deleteciudades, ciudades
+from modelos.views import dashboard, login, bloquearobservaciones, historialviewpdf, eliminarcita, deleteentidad, entidad, registrarcitapacienteregister,edithistori, editarhistoriaclinica, logout, usuarios, guardarhistoriaclinica, verhistoriaclinica, historiaclinica, registarprestador,historialregistrar, citas, registracita, especialidadseleccionada, citasdetalles, editarusuarios, inactivarusuario, registarasistente, maestros,especialidades, deleteespecialidades, deleteciudades, ciudades
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -49,6 +49,7 @@ urlpatterns = [
     path('historiasclinicas/editarhistoriaclinica/<int:idhis>',editarhistoriaclinica),
     path('historiasclinicas/editarhistoriaclinicasa/<int:id1>/<int:id2>',edithistori),
     path('cancelarcita/<int:id1citas>',eliminarcita),
+    path('bloqueo/<str:asis>',bloquearobservaciones),
     
     
 ]
