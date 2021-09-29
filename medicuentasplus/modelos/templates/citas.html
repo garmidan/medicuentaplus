@@ -40,8 +40,8 @@
       Tip 2: you can also add an image using data-image tag
   -->
             <div class="logo" style="background-color: #3c3c3c;">
-                <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-                    <img src="{% static 'imagenes/medicuentaslogo.png'%}" style=" width: 70%; margin-bottom: 10px" />
+                <a href="" class="simple-text logo-mini">
+                    <img src="{% static 'imagenes/logo1.png'%}" style=" width: 70%; margin-bottom: 10px" />
                 </a>
             </div>
             <div class="sidebar-wrapper" style="background-color: #3c3c3c !important;">
@@ -142,7 +142,7 @@
                 </div>
                 <form method="POST" action="/citas">
                     {% csrf_token %}
-                    {%if usuario.rol == 'Administrador'%}
+                    {%if usuario.rol == 'Administrador' or usuario.rol == 'Asistente'%}
                 <table id="example" class="display nowrap" style="width:100%">
                     <thead>
                         <tr>

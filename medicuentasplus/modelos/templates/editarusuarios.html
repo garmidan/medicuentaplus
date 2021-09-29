@@ -38,8 +38,8 @@
       Tip 2: you can also add an image using data-image tag
   -->
             <div class="logo" style="background-color: #3c3c3c;">
-                <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-                    <img src="{% static 'imagenes/medicuentaslogo.png'%}" style=" width: 70%; margin-bottom: 10px" />
+                <a href="" class="simple-text logo-mini">
+                    <img src="{% static 'imagenes/logo1.png'%}" style=" width: 70%; margin-bottom: 10px" />
                 </a>
             </div>
             <div class="sidebar-wrapper" style="background-color: #3c3c3c !important;">
@@ -225,7 +225,10 @@
                             <select class="form-control" name="asistente">
                             <option selected value="{{useredit.id}}">{{useredit.asistente}}</option>
                             {% for asi in asistente%}
-                                <option value="{{asi}}">{{asi}}</option>
+                                {% if asi.primernombre|add:"-"|add:asi.usuario == useredit.asistente%}
+                                {%else%}
+                                <option value="{{asi.primernombre}}-{{asi.usuario}}">{{asi.primernombre}}-{{asi.usuario}}</option>
+                                {%endif%}
                             {% endfor %}
                             </select>
                         </div>

@@ -35,8 +35,8 @@
       Tip 2: you can also add an image using data-image tag
   -->
             <div class="logo" style="background-color: #3c3c3c;">
-                <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-                    <img src="{% static 'imagenes/medicuentaslogo.png'%}" style=" width: 70%; margin-bottom: 10px" />
+                <a href="" class="simple-text logo-mini">
+                    <img src="{% static 'imagenes/logo1.png'%}" style=" width: 70%; margin-bottom: 10px" />
                 </a>
             </div>
             <div class="sidebar-wrapper" style="background-color: #3c3c3c !important;">
@@ -385,7 +385,7 @@
                     var documento = "";
                     var doc = new jsPDF();
                     var img = new Image();
-                    img.src = '../../static/imagenes/medicuentaslogo.png';
+                    img.src = '../../static/imagenes/logo1.png';
                     doc.addImage(img, 'png', 10, 0, 70, 25)
                     doc.text("Historia Clinica", 80, 30);
                     doc.setFont("helvetica");

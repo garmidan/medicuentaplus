@@ -38,8 +38,8 @@
       Tip 2: you can also add an image using data-image tag
   -->
             <div class="logo" style="background-color: #3c3c3c;">
-                <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-                    <img src="{% static 'imagenes/medicuentaslogo.png'%}" style=" width: 70%; margin-bottom: 10px" />
+                <a href="" class="simple-text logo-mini">
+                    <img src="{% static 'imagenes/logo1.png'%}" style=" width: 70%; margin-bottom: 10px" />
                 </a>
             </div>
             <div class="sidebar-wrapper" style="background-color: #3c3c3c !important;">
@@ -209,6 +209,17 @@
                                 <select class="form-control" id="selectprestador" name="selectprestador"
                                     required disabled>
                                     <option selected disabled>Seleccionar</option>
+                                </select>
+                            </div>
+                        {%endif%}
+                        {% if usuario.rol == 'Asistente'%}
+                            <div class="col-md-4">
+                                <select class="form-control" id="selectprestador" name="selectprestador"
+                                    required>
+                                    <option selected disabled value="">Seleccionar Especialista</option>
+                                    {% for espe in especialista%}
+                                    <option value="{{espe.id}}">{{espe.primernombre}}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         {%endif%}

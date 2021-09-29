@@ -66,6 +66,7 @@ class Cita(models.Model):
 
 class HistoriasClinica(models.Model):
     paciente =  models.ForeignKey(Paciente, on_delete=models.CASCADE, blank=True,null=True)
+    especialista =  models.ForeignKey(Usuario, on_delete=models.CASCADE, blank=True,null=True)
 
 
 class Diagnostico(models.Model):

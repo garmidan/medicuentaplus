@@ -40,8 +40,8 @@
       Tip 2: you can also add an image using data-image tag
   -->
             <div class="logo" style="background-color: #3c3c3c;">
-                <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-                    <img src="{% static 'imagenes/medicuentaslogo.png'%}" style=" width: 70%; margin-bottom: 10px" />
+                <a href="" class="simple-text logo-mini">
+                    <img src="{% static 'imagenes/logo1.png'%}" style=" width: 70%; margin-bottom: 10px" />
                 </a>
             </div>
             <div class="sidebar-wrapper" style="background-color: #3c3c3c !important;">
@@ -125,11 +125,8 @@
             <!-- End Navbar -->
             <div class="content">
                 <div class=" w-100  row" style="width:fit-content; margin-bottom: 30px;">
-                    <div class="col-12 col-sm-3 col-md-3" style="background-color: rgb(30, 115, 220);
-                    margin:  0px 20px 40px 15px;
-                    border-radius: 15px;">
-                        <i class="fas fa-calendar-alt" style="color: rgb(255, 255, 255); font-size: 49px; margin-left: 90px; margin-top: 20px;"></i>
-                        <a href="/citas/registrarcita" style="color:rgb(255, 255, 255) !important; font-size: 19px;"><h4 style="font-size: 19px; text-align: center;">Agregar Nueva Cita</h4></a>
+                    <div style="text-align: center;">
+                        <h3>Agenda del prestador {{prestador.primernombre}} {{prestador.primerapellido}}  {{prestador.segundoapellido}}</h3>
                     </div>
                     <!--
                     <div class="col-12 col-sm-3 col-md-3" style="background-color: rgb(30, 115, 220);
@@ -142,6 +139,7 @@
                 </div>
                 <form method="POST" action="/cancelarcita">
                     {% csrf_token %}
+                    
                 <table id="example" class="display nowrap" style="width:100%">
                     <thead>
                         <tr>
