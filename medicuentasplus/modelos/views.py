@@ -832,3 +832,35 @@ def cambiocontraseñausuario(request):
             return render(request,"cambiocontraseñausuario.html",{"usuario":usuario,"usuarios":usuarios,"validar":validar})
         else:
             return redirect('/')
+
+#Diagnosticos
+def diagnosticos(request):
+    if request.session.get('validar') == False:
+        return redirect('/')
+    else: 
+        usuario = Usuario.objects.get(id=request.session.get('user'))
+        if usuario.rol == "Administrador":
+            diagnosticos = Diagnostico.objects.all()
+            validar = 0
+            if request.method == "POST":
+                if Diagnostico.objects.filter(codigo= request.POST.get("codigo")).exists():
+                    validar = 2
+                else:
+                    diagnosticoregister = Diagnostico(codigo=request.POST.get("codigo"), diagnostico =request.POST.get("diagnostico"))
+                    diagnosticoregister.save()
+                    validar = 1
+            return render(request,"diagnosticos.html",{"usuario":usuario,"diagnosticos":diagnosticos,"validar":validar,"sesion":request.session.get('validar')})
+        else:
+            return redirect('/dashboard')
+
+def deletediagnostico(request,iddiagnostico):
+    if request.session.get('validar') == False:
+        return redirect('/')
+    else: 
+        usuario = Usuario.objects.get(id=request.session.get('user'))
+        if usuario.rol == "Administrador":
+            deletediagnosticos = Diagnostico.objects.get(id=iddiagnostico)
+            deletediagnosticos.delete()
+            return redirect('/maestros/diagnosticos')
+        else:
+            return redirect('/dashboard')

@@ -26,11 +26,11 @@
             function preventBack() { window.history.forward(); }  
             setTimeout("preventBack()", 0);  
             window.onunload = function () { null };  
-        </script>
+        </script> 
 </head>
 
-<body style="color: #212529 !important;">
-    <div class="wrapper">
+<body>
+    <div class="wrapper ">
         <div class="sidebar" data-color="purple" data-background-color="white">
             <!--
       Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
@@ -116,94 +116,85 @@
                     </div>
                 </div>
             </nav>
-
-
-            <div id="padre" style="position: relative; display: inline-block;">
-                <img id="content_div_one_photo" style="height: 43.4rem;
-                width: 100rem;" class="img-fluid card-img" src="{% static 'imagenes/personal-medico.jpg'%}">
-                <div style="position: absolute;right: 30rem; margin-top: -500px; margin-right: -250px; width: 50%;" class="card-title">
-                    <div class="row">
-                        <div class="col-md-5"  style="background-color: rgb(30, 115, 220);
-                        width: 300%;
-                        height: 150px;
-                        margin-right: 40px;
-                        border-radius: 15px;">
-                            <div>
-                                <i class="fas fa-user-injured" style="font-size: 99px;color: rgb(255, 255, 255); font-size: 50px; margin-left: 80px; margin-top: 40px;"></i>
-                            </div>
-                            <div>
-                                <a href="/maestros/especialidades" style="color:rgb(255, 255, 255) !important; "><h5 style="text-align: center; font-size: 25px;">Especialidades</h5></a>
-                            </div>
-                        </div>
-                        <div class="col-md-5"  style="background-color: rgb(30, 115, 220);
-                        width: 300%;
-                        height: 150px;
-                        border-radius: 15px;">
-                            <div>
-                                <i class="fa-map-marked-alt fas" style="font-size: 99px;color: rgb(255, 255, 255); font-size: 50px; margin-left: 80px; margin-top: 40px;"></i>
-                            </div>
-                            <div>
-                                <a href="/maestros/ciudades" style="color:rgb(255, 255, 255) !important; "><h5 style="text-align: center; font-size: 25px;">Ciudades</h5></a>
-                            </div>
-                        </div>
-                        <div class="col-md-5"  style="background-color: rgb(30, 115, 220);
-                        width: 300%;
-                        height: 150px;
-                        border-radius: 15px;margin-top: 40px;">
-                            <div>
-                                <i class="fab fa-creative-commons-nc-eu" style="font-size: 99px;color: rgb(255, 255, 255); font-size: 50px; margin-left: 80px; margin-top: 40px;"></i>
-                            </div>
-                            <div>
-                                <a href="/maestros/entidades" style="color:rgb(255, 255, 255) !important; "><h5 style="text-align: center; font-size: 25px;">Entidades</h5></a>
-                            </div>
-                        </div>
-                        <div class="col-md-5"  style="background-color: rgb(30, 115, 220);
-                        width: 300%;
-                        height: 150px;
-                        border-radius: 15px;margin-top: 40px; margin-left: 47px;">
-                            <div>
-                                <i class="fas fa-diagnoses" style="font-size: 99px;color: rgb(255, 255, 255); font-size: 50px; margin-left: 80px; margin-top: 40px;"></i>
-                                
-                            </div>
-                            <div>
-                                <a href="/maestros/diagnosticos" style="color:rgb(255, 255, 255) !important; "><h5 style="text-align: center; font-size: 25px;">Diagnosticos</h5></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- End Navbar -->
-            <!--<div class="content">
-                
-                <div class=" w-100  row" style="width:fit-content; margin-bottom: 30px;">
-                    <div class="col-12 col-sm-3 col-md-3" style="background-color: rgb(30, 115, 220);
-                    margin:  0px 20px 40px 15px;
-                    border-radius: 15px;">
-                        <i class="fas fa-user-md"
-                            style="color: rgb(255, 255, 255); font-size: 49px; margin-left: 90px; margin-top: 20px;"></i>
-                        <a href="/usuarios/registrarprestador"
-                            style="color:rgb(255, 255, 255) !important; font-size: 19px;">
-                            <h4 style="font-size: 19px; text-align: center;">Registrar Prestador</h4>
-                        </a>
+            <div class="content">
+            {% if validar == 1%}
+                <div id="alerta" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>El diagnostico ha sido agregada satisfactioriamente</strong> 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {%endif%}
+            {% if validar == 2%}
+                <div id="alerta" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Diagnostico ya existe</strong> 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {%endif%}
+                <form method="POST" action="/maestros/diagnosticos">
+                    {% csrf_token %} 
+                    
+                <div class="row" style="width:fit-content; margin-top: 10px; margin-bottom: 30px; margin-left: 110px;">
+                    
+                    <div style="margin-left: 150px; margin-bottom: 10px;">
+                        <h3>Agregar Diagnostico</h3>
                     </div>
-                    <div class="col-12 col-sm-3 col-md-3" style="background-color: rgb(30, 115, 220);
-                    margin: 0px 20px 40px 10px;
-                    border-radius: 15px;">
-                        <i class="fas fa-user-friends"
-                            style="color: rgb(255, 255, 255); font-size: 49px; margin-left: 90px; margin-top: 20px;"></i>
-                        <a href="/usuarios/registarasistente" style="color:rgb(255, 255, 255) !important; font-size: 19px;">
-                            <h4 style="font-size: 19px; text-align: center;">Registrar Asistente</h4>
-                        </a>
+                    <div class="col-md-6">
+                        <div class="input-group" style="margin-top: 10px; ">
+                            <input type="text"  name="codigo" class="form-control" id="validationDefaultUsername"
+                                aria-describedby="inputGroupPrepend2" placeholder="Codigo Diagnostico" required>
+                        </div>
+                        <div class="input-group" style="margin-top: 10px; ">
+                            <input type="text"  name="diagnostico" class="form-control" id="validationDefaultUsername"
+                                aria-describedby="inputGroupPrepend2" placeholder="Nombre Diagnostico" required>
+                        </div>
                     </div>
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-primary" style="margin-top: 30px; width: 50%; color: #fff;
+                        background-color: #0069d9;
+                        border-color: #0062cc">Añadir Diagnostico</button>
+                    </div>
+                    <!--
                     <div class="col-12 col-sm-3 col-md-3" style="background-color: rgb(30, 115, 220);
                     margin:  0px 20px 40px 10px;
                     border-radius: 15px;">
                         <i class="fas fa-user-tag" style="color: rgb(255, 255, 255); font-size: 49px; margin-left: 90px; margin-top: 20px;"></i>
                         <a href="" style="color:rgb(255, 255, 255) !important; font-size: 19px;"><h4 style="font-size: 19px; text-align: center;">Roles y Permisos</h4></a>
                     </div>
+                    -->
                 </div>
+            </form>
+                <div style="margin-top: 40px; margin-bottom: 30px;">
+                    <h3 style="text-align: center;">Lista Diagnosticos</h3>
+                </div>
+                <div style="width: 60%; margin-left: 140px;">
+                <table id="example" class="display nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Diagnostico</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for diagnostico in diagnosticos%}
+                        <tr>
+                            <td>{{diagnostico.codigo}}</td>
+                            <td>{{diagnostico.diagnostico}}</td>
+                            <td><a href="/maestros/diagnosticos/{{diagnostico.id}}"><i class="fas fa-minus-circle" style="font-size: 20px;"></i></a></td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Diagnostico</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+                
             </div>
-        -->
             <!--<footer class="footer">
                 <div class="container-fluid">
                     <nav class="float-left">
@@ -242,29 +233,23 @@
                 "language": {
                     "lengthMenu": "Mostrar _MENU_ registros por página",
                     "zeroRecords": "No se encontraron registros coincidentes",
-                    "info": "Mostrando pagina _PAGE_ of _PAGES_",
+                    "info": "Mostrando pagina _PAGE_ de _PAGES_",
                     "infoEmpty": "No hay registros disponibles",
                     "infoFiltered": "(Filtrado de _MAX_ total registros)"
                 },
                 "columns": [
-                    { "data": "Nombres" },
-                    { "data": "Apellidos" },
-                    { "data": "Correo" },
-                    { "data": "Tipo De Cedula" },
-                    { "data": "Fecha Nacimiento" },
-                    { "data": "Sexo" },
-                    { "data": "Numero Telefono" },
-                    { "data": "Ciudad" },
-                    { "data": "Especialidad" },
-                    { "data": "Rol" },
-                    { "data": "Asistente" },
-                    { "data": "Estado" },
+                    { "data": "Codigo" },
+                    { "data": "Diagnostico" },
                     { "data": "" }
                 ]
             });
         });
     </script>
-    
 </body>
+{% if validar == 1%}
+<script>
+    $("#alerta").delay(3000).hide(1);
+</script>
+{%endif%}
 
 </html>
