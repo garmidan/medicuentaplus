@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from modelos.views import cambiocontraseñausuario, deletediagnostico, dashboard,diagnosticos, login, cambiocontraseña, bloquearobservaciones, historialviewpdf, eliminarcita, deleteentidad, entidad, registrarcitapacienteregister,edithistori, editarhistoriaclinica, logout, usuarios, guardarhistoriaclinica, verhistoriaclinica, historiaclinica, registarprestador,historialregistrar, citas, registracita, especialidadseleccionada, citasdetalles, editarusuarios, inactivarusuario, registarasistente, maestros,especialidades, deleteespecialidades, deleteciudades, ciudades
+from modelos.views import handler404,handler403,handler500, cambiocontraseñausuario, deletediagnostico, dashboard,diagnosticos, login, cambiocontraseña, bloquearobservaciones, historialviewpdf, eliminarcita, deleteentidad, entidad, registrarcitapacienteregister,edithistori, editarhistoriaclinica, logout, usuarios, guardarhistoriaclinica, verhistoriaclinica, historiaclinica, registarprestador,historialregistrar, citas, registracita, especialidadseleccionada, citasdetalles, editarusuarios, inactivarusuario, registarasistente, maestros,especialidades, deleteespecialidades, deleteciudades, ciudades
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -50,8 +50,8 @@ urlpatterns = [
     path('historiasclinicas/editarhistoriaclinicasa/<int:id1>/<int:id2>',edithistori),
     path('cancelarcita/<int:id1citas>',eliminarcita),
     path('bloqueo/<str:asis>',bloquearobservaciones),
-    path('cambiocontraseña/<int:iduser>',cambiocontraseña),
-    path('cambiocontraseñausuario',cambiocontraseñausuario),
+    path('cambioclave/<int:iduser>',cambiocontraseña),
+    path('cclaveusuario',cambiocontraseñausuario),
     path('maestros/diagnosticos',diagnosticos),
     path('maestros/diagnosticos/<int:iddiagnostico>',deletediagnostico),
     
@@ -61,3 +61,6 @@ urlpatterns = [
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+handler404 = handler404
+handler500 = handler500
+handler403 = handler403
