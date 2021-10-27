@@ -256,6 +256,7 @@ main .container-fluid .row .col-9 #titulo h1{
 
 	.col-9{
 		margin-bottom: 10px;
+		width: 95%;
 	}
 	
 	.img-1{
