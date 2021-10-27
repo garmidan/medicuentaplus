@@ -4,293 +4,178 @@
 
 <head>
     <title>MEDICUENTAS PLUS</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css"
-        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-    <!-- CSS only -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@300&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <!-- Material Kit CSS -->
-    <link href="{% static 'css/material-dashboard.css' %}" rel="stylesheet" />
-    
-        <script type = "text/javascript" >  
-            function preventBack() { window.history.forward(); }  
-            setTimeout("preventBack()", 0);  
-            window.onunload = function () { null };  
-        </script> 
-    
+    {% load static %}
+    <title>MEDICUENTAS PLUS</title>
+    {% block head %}
+    {% include "head.html" %}
+    {% endblock %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.2/datatables.min.css" />
+    <script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
 </head>
 
 <body>
-    <div class="wrapper ">
-        <div class="sidebar" data-color="purple" data-background-color="white">
-            <!--
-      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-
-      Tip 2: you can also add an image using data-image tag
-  -->
-            <div class="logo" style="background-color: #3c3c3c;">
-                <a href="" class="simple-text logo-mini">
-                    <img src="{% static 'imagenes/logo1.png'%}" style=" width: 70%; margin-bottom: 10px" />
-                </a>
-            </div>
-            <div class="sidebar-wrapper" style="background-color: #3c3c3c !important;">
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link" style="color: #fff;" href="/dashboard">
-                            <i class="fas fa-user-circle"></i>
-                            <p>Mi Usuario</p>
-                        </a>
-                    </li>
-                    {% if usuario.rol == 'Administrador'%}
-                    <li class="nav-item">
-                      <a class="nav-link" href="/usuarios" style="color: #fff;">
-                        <i class="fas fa-users"></i>
-                        <p>Usuarios</p>
-                      </a>
-                    </li>
-                    {%endif%}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/historiasclinicas" style="color: #fff;">
-                            <i class="fas fa-notes-medical"></i>
-                            <p>Historias Clinicas</p>
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/citas" style="background-color: #1e73dc !important;">
-                            <i class="fas fa-calendar-alt"></i>
-                            <p>Citas</p>
-                        </a>
-                    </li>
-                    {% if usuario.rol == 'Administrador'%}
-                        <li class="nav-item">
-                        <a class="nav-link" href="/maestros" style="color: #fff;">
-                            <i class="fas fa-cogs"></i>
-                            <p>Maestros</p>
-                        </a>
-                        </li>
-                    {%endif%}
-                </ul>
-            </div>
-        </div>
-        <div class="main-panel">
-            <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top"
-                style="background-color: #3c3c3c !important; color: #fff !important;">
-                <div class="container-fluid">
-                    <div class="navbar-wrapper">
-                        <a class="navbar-brand" href="javascript:;">
-                            <h6>Copyright © 2021 - Medicuentas Plus V 0.1</h6>
-                        </a>
-                    </div>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="navbar-toggler-icon icon-bar"></span>
-                        <span class="navbar-toggler-icon icon-bar"></span>
-                        <span class="navbar-toggler-icon icon-bar"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-end">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="javascript:;">
-                                    {{usuario.usuario}}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/cambioclave/{{usuario.id}}">
-                                    Cambiar Contraseña
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/logout">
-                                    Cerrar Sesion
-                                </a>
-                            </li>
-                            <!-- your navbar here -->
-                        </ul>
-                    </div>
+    <header>
+        {% block header %}
+        {% include "header.html" %}
+        {% endblock %}
+    </header>
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-3">
+                    {% block main %}
+                    {% include "main.html" %}
+                    {% endblock %}
                 </div>
-            </nav>
-            <!-- End Navbar -->
-            <div class="content">
-                <div class=" w-100  row" style="width:fit-content; margin-bottom: 30px;">
-                    <div class="col-12 col-sm-3 col-md-3" style="background-color: rgb(30, 115, 220);
-                    margin:  0px 20px 40px 15px;
-                    border-radius: 15px;">
-                        <i class="fas fa-calendar-alt" style="color: rgb(255, 255, 255); font-size: 49px; margin-left: 90px; margin-top: 20px;"></i>
-                        <a  data-bs-toggle="modal" data-bs-target="#staticBackdrop" type="button" style="color:rgb(255, 255, 255) !important; font-size: 19px; margin-left: 50px;"><h4 style="font-size: 19px; text-align: center;">Agregar Nueva Cita</h4></a>
+                <div class="col-9">
+                    <div style="margin-bottom: 20px;" class="mt-4">
+                        <button style="background-color: #1e73dc;" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop" type="button">
+                            Agregar Nueva Cita
+                        </button>
                     </div>
-                    <!--
-                    <div class="col-12 col-sm-3 col-md-3" style="background-color: rgb(30, 115, 220);
-                    margin:  0px 20px 40px 10px;
-                    border-radius: 15px;">
-                        <i class="fas fa-user-tag" style="color: rgb(255, 255, 255); font-size: 49px; margin-left: 90px; margin-top: 20px;"></i>
-                        <a href="" style="color:rgb(255, 255, 255) !important; font-size: 19px;"><h4 style="font-size: 19px; text-align: center;">Roles y Permisos</h4></a>
-                    </div>
-                    -->
-                </div>
-                <form method="POST" action="/citas">
-                    {% csrf_token %}
-                    {%if usuario.rol == 'Administrador' or usuario.rol == 'Asistente'%}
-                <table id="example" class="display nowrap" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Documento</th>
-                            <th>Nombres</th>
-                            <th>Especialidad</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for pres in prestador%}
-                        <tr>
-                            <td>{{pres.numerodocumento}}</td>
-                            <td>{{pres.primernombre}} {{pres.segundonombre}}</td>
-                            <td>
-                                {{pres.especialidad.especialidad}}
-                            </td>
-                            <td>
-                                <a href="/citas/detalles/{{pres.numerodocumento}}" type="submit" style="background-color: rgb(30, 115, 220); color: white;" class="btn btn-primary">Ver Agenda</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>Documento</th>
-                            <th>Nombres</th>
-                            <th>Especialidad</th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
-                </table>
-                {%else%}
-                <table id="example" class="display nowrap" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Documento Paciente</th>
-                            <th>Nombres Paciente</th>
-                            <th>Apellidos Paciente</th>
-                            <th>Correo Paciente</th>
-                            <th>Celular Paciente</th>
-                            <th>Fecha Y Hora</th>
-                            <th>Especialista</th>
-                            <th>Especialidad</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for cita in citasagendadas%}
-                        <tr>
-                            <td>{{cita.paciente.numerodocumento}}</td>
-                            <td>{{cita.paciente.nombres}}</td>
-                            <td>
-                                {{cita.paciente.apellidos}}
-                            </td>
-                            <td>
-                                {{cita.paciente.correo}}
-                            </td> 
-                            <td>
-                                {{cita.paciente.movil}}
-                            </td>
-                            <td>{{cita.fechacita}} a las {{cita.horacita}}</td>
-                            <td>{{cita.especialista.primernombre}}</td>
-                            <td>{{cita.especialidad.especialidad}}</td>
-                            <td>
-                                <a type="button" href="/cancelarcita/{{cita.id}}" style="background-color: red; color: white;" class="btn btn-danger">Cancelar Cita</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>Documento Paciente</th>
-                            <th>Nombres Paciente</th>
-                            <th>Apellidos Paciente</th>
-                            <th>Correo Paciente</th>
-                            <th>Celular Paciente</th>
-                            <th>Fecha Y Hora</th>
-                            <th>Especialista</th>
-                            <th>Especialidad</th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
-                </table>
-                {%endif%}
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel">Digite numero documento paciente</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <input class="form-control" type="number" name="numerodocumento" placeholder="Digite el numero de documento"/>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Generar</button>
+                    <form method="POST" action="/citas">
+                        {% csrf_token %}
+                        {%if usuario.rol == 'Administrador' or usuario.rol == 'Asistente'%}
+                        <table id="example" class="display nowrap" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Documento</th>
+                                    <th>Nombres</th>
+                                    <th>Especialidad</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for pres in prestador%}
+                                <tr>
+                                    <td>{{pres.numerodocumento}}</td>
+                                    <td>{{pres.primernombre}} {{pres.segundonombre}}</td>
+                                    <td>
+                                        {{pres.especialidad.especialidad}}
+                                    </td>
+                                    <td>
+                                        <a href="/citas/detalles/{{pres.numerodocumento}}" type="submit"
+                                            style="background-color: rgb(30, 115, 220); color: white;"
+                                            class="btn btn-primary">Ver Agenda</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Documento</th>
+                                    <th>Nombres</th>
+                                    <th>Especialidad</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        {%else%}
+                        <table id="example" class="display nowrap" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Documento Paciente</th>
+                                    <th>Nombres Paciente</th>
+                                    <th>Apellidos Paciente</th>
+                                    <th>Correo Paciente</th>
+                                    <th>Celular Paciente</th>
+                                    <th>Fecha Y Hora</th>
+                                    <th>Especialista</th>
+                                    <th>Especialidad</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cita in citasagendadas%}
+                                <tr>
+                                    <td>{{cita.paciente.numerodocumento}}</td>
+                                    <td>{{cita.paciente.nombres}}</td>
+                                    <td>
+                                        {{cita.paciente.apellidos}}
+                                    </td>
+                                    <td>
+                                        {{cita.paciente.correo}}
+                                    </td>
+                                    <td>
+                                        {{cita.paciente.movil}}
+                                    </td>
+                                    <td>{{cita.fechacita}} a las {{cita.horacita}}</td>
+                                    <td>{{cita.especialista.primernombre}}</td>
+                                    <td>{{cita.especialidad.especialidad}}</td>
+                                    <td>
+                                        <a type="button" href="/cancelarcita/{{cita.id}}"
+                                            style="background-color: red; color: white;" class="btn btn-danger">Cancelar
+                                            Cita</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Documento Paciente</th>
+                                    <th>Nombres Paciente</th>
+                                    <th>Apellidos Paciente</th>
+                                    <th>Correo Paciente</th>
+                                    <th>Celular Paciente</th>
+                                    <th>Fecha Y Hora</th>
+                                    <th>Especialista</th>
+                                    <th>Especialidad</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        {%endif%}
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Digite numero documento
+                                            paciente</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input class="form-control" type="number" name="numerodocumento"
+                                            placeholder="Digite el numero de documento" />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Generar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </form>
                 </div>
-                </form>
             </div>
-           <!--<footer class="footer">
-                <div class="container-fluid">
-                    <nav class="float-left">
-                        <ul>
-                            <li>
-                                <a href="https://www.creative-tim.com">
-                                    Creative Tim
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div class="copyright float-right">
-                        &copy;
-                        <script>
-                            document.write(new Date().getFullYear())
-                        </script>, made with <i class="material-icons">favorite</i> by
-                        <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
-                    </div>
-                   your footer here 
-                </div>
-            </footer>--> 
         </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.2/datatables.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/index.js'%}"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.2/datatables.min.js"></script>
-   {% if usuario.rol == 'Administrador'%}
-   <script>
+    {% if usuario.rol == 'Administrador'%}
+    <script>
         $(document).ready(function () {
             $('#example').DataTable({
-            "scrollX": true,
-            "language": {
-                "lengthMenu": "Mostrar _MENU_ registros por página",
-                "zeroRecords": "No se encontraron registros coincidentes",
-                "info": "Mostrando pagina _PAGE_ of _PAGES_",
-                "infoEmpty": "No hay registros disponibles",
-                "infoFiltered": "(Filtrado de _MAX_ total registros)"
-            },
+                "scrollX": true,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "No se encontraron registros coincidentes",
+                    "info": "Mostrando pagina _PAGE_ of _PAGES_",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(Filtrado de _MAX_ total registros)"
+                },
                 "columns": [
                     { "data": "Documento" },
                     { "data": "Nombres" },
@@ -304,14 +189,14 @@
     <script>
         $(document).ready(function () {
             $('#example').DataTable({
-            "scrollX": true,
-            "language": {
-                "lengthMenu": "Mostrar _MENU_ registros por página",
-                "zeroRecords": "No se encontraron registros coincidentes",
-                "info": "Mostrando pagina _PAGE_ of _PAGES_",
-                "infoEmpty": "No hay registros disponibles",
-                "infoFiltered": "(Filtrado de _MAX_ total registros)"
-            },
+                "scrollX": true,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "No se encontraron registros coincidentes",
+                    "info": "Mostrando pagina _PAGE_ of _PAGES_",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(Filtrado de _MAX_ total registros)"
+                },
                 "columns": [
                     { "data": "Documento Paciente" },
                     { "data": "Nombres Paciente" },

@@ -1,0 +1,16 @@
+{%load static%}
+<div class="menu_bar">
+    <a href="#" class="bt-menu"><i class="fas fa-bars"></i><img src="{% static 'imagenes/logo1.png'%}"
+            class="img-2"></a>
+</div>
+<img src="{% static 'imagenes/logo1.png'%}" class="img-1">
+<nav>
+    <ul>
+        <li><a href="/logout">CERRAR SESION</a></li>
+        {% if usuario.rol == 'Administrador'%}
+        <li><a href="/cclaveusuario">GENERAR NUEVA CONTRASEÑA A UN USUARIO</a></li>
+        {%endif%}
+        <li><a href="/cambioclave/{{usuario.id}}">CAMBIAR CONTRASEÑA</a></li>
+        <li><a href="#">{{usuario.usuario}}</a></li>
+    </ul>
+</nav>

@@ -513,6 +513,7 @@ def guardarhistoriaclinica(request,idpaciente):
         if request.session.get('user'):
             usuario = Usuario.objects.get(id=request.session.get('user'))
             diagnosticos = Diagnostico.objects.all()
+            validar = 0
             if usuario.rol == "Administrador" or usuario.rol == "Prestador":
                 if request.method == "POST":
                     pacientico = Paciente.objects.get(id=idpaciente)
@@ -532,8 +533,8 @@ def guardarhistoriaclinica(request,idpaciente):
                     observaciones = request.POST.get("observaciones")
                     )
                     consultaregister.save()
-                    print("Consulta registrada")
-                return render(request,"nuevahistoria.html",{"usuario":usuario,"sesion":request.session.get('validar'),"diagnosticos":diagnosticos})
+                    validar = 1
+                return render(request,"nuevahistoria.html",{"usuario":usuario,"sesion":request.session.get('validar'),"diagnosticos":diagnosticos,"validar":validar})
             else:
                 return redirect('/dashboard')
         else:
@@ -678,9 +679,9 @@ def editarhistoriaclinica(request,idhis):
                             edithistoria = Consulta.objects.get(id=editcon.id)
                             if request.POST.get("fechaconsultica"+str(editcon.id)):
                                 edithistoria.fechaconsulta = request.POST.get("fechaconsultica"+str(editcon.id))
-                            
+                            if request.POST.get("diagnosticico"+str(editcon.id)):
+                                edithistoria.diagnostico = request.POST.get("diagnosticico"+str(editcon.id))
                             edithistoria.fechaalta = request.POST.get("horaconsultica"+str(editcon.id))
-                            edithistoria.diagnostico = request.POST.get("diagnosticico"+str(editcon.id))
                             edithistoria.tratamiento = request.POST.get("tratamientico"+str(editcon.id))
                             edithistoria.otrosdatos = request.POST.get("otrosdaticos"+str(editcon.id))
                             edithistoria.observaciones = request.POST.get("observacione"+str(editcon.id))
@@ -710,7 +711,8 @@ def edithistori(request,id1,id2):
                         edit1consul.fechaconsulta = request.POST.get("fechaconsulta1")
                     if request.POST.get("horaconsulta1"):
                         edit1consul.fechaalta = request.POST.get("horaconsulta1")
-                    edit1consul.diagnostico = request.POST.get("diagnostico1")
+                    if request.POST.get("diagnostico1"):
+                        edit1consul.diagnostico = request.POST.get("diagnostico1")
                     edit1consul.tratamiento = request.POST.get("tratamiento1")
                     edit1consul.otrosdatos = request.POST.get("otrosdatos1")
                     edit1consul.observaciones = request.POST.get("observaciones1")
@@ -719,7 +721,8 @@ def edithistori(request,id1,id2):
                         edit2consul.fechaconsulta = request.POST.get("fechaconsulta2")
                     if request.POST.get("horaconsulta2"):
                         edit2consul.fechaalta = request.POST.get("horaconsulta2")
-                    edit2consul.diagnostico = request.POST.get("diagnostico2")
+                    if request.POST.get("diagnostico2"):
+                        edit2consul.diagnostico = request.POST.get("diagnostico2")
                     edit2consul.tratamiento = request.POST.get("tratamiento2")
                     edit2consul.otrosdatos = request.POST.get("otrosdatos2")
                     edit2consul.observaciones = request.POST.get("observaciones2")
@@ -812,7 +815,7 @@ def cambiocontraseña(request,iduser):
                         validar = 2
                 else:
                     validar = 1
-            return render(request,"cambiocontraseña.html",{"usuario":usuario,"validar":validar})
+            return render(request,"cambioclave.html",{"usuario":usuario,"validar":validar})
         else:
             return redirect('/')
 

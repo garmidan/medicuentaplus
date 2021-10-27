@@ -1,211 +1,220 @@
 <!doctype html>
 <html lang="en">
-{% load static %}
-
 <head>
+    {% load static %}
     <title>MEDICUENTAS PLUS</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css"
-        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-    <!-- CSS only -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@300&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <!-- Material Kit CSS -->
-    <link href="{% static 'css/material-dashboard.css' %}" rel="stylesheet" />
+    {% block head %}
+	{% include "head.html" %}
+	{% endblock %}
 </head>
-
 <body>
-    <div class="wrapper ">
-        <div class="sidebar" data-color="purple" data-background-color="white">
-            <!--
-      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+    <header>
+        {% block header %}
+				{% include "header.html" %}
+		{% endblock %}
+    </header>
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-3">
+                    {% block main %}
+				        {% include "main.html" %}
+		            {% endblock %}
+                </div>
+                <div class="col-9 row" id="col-9">
+                    <div id="completa">
+                        <div style="font-family: 'Alegreya Sans SC'; margin-left: 200px;" class="col-lg-2"
+                            id="perfilfoto">
+                            <img _ngcontent-xhe-c207="" src="{% static 'imagenes/profile.png'%}" width="64" height="64"
+                                alt="Profile Image" class="ml-2 mr-4">
+                        </div>
+                        <div style="font-family: 'Alegreya Sans SC';" class="col-lg-2" id="perfil">
+                            <div>
+                                <h4>{{usuario.primernombre}} {{usuario.primerapellido}}</h4>
+                            </div>
+                            <div>
+                                <h6>{{usuario.rol}}</h6>
+                            </div>
+                        </div>
+                        <!--pantalla completa-->
+                        <div>
+                            <div class="row" id="datos">
+                                <div style="font-family: 'Alegreya Sans SC'; margin-left: 220px; margin-top: 20px;"
+                                    class="col-lg-6">
+                                    <p>Informacion</p>
+                                </div>
+                                <div style="font-family: 'Alegreya Sans SC'; margin-top: 20px;" class="col-lg-2">
+                                    <p>Contacto</p>
+                                </div>
+                            </div>
+                            <hr style="width: 70%; margin-left: 230px;" />
+                            <div class="row">
+                                <div style="font-family: 'Alegreya Sans SC'; margin-left: 220px; margin-top: 5px;"
+                                    class="col-lg-5">
 
-      Tip 2: you can also add an image using data-image tag
-  -->
-            <div class="logo" style="background-color: #3c3c3c;">
-                <a href="" class="simple-text logo-mini">
-                    <img src="{% static 'imagenes/logo1.png'%}" style=" width: 70%; margin-bottom: 10px" />
-                </a>
-            </div>
-            <div class="sidebar-wrapper" style="background-color: #3c3c3c !important;">
-                <ul class="nav">
-                    <li class="nav-item active">
-                      <a class="nav-link" style="background-color: #1e73dc !important;" href="/dashboard">
-                        <i class="fas fa-user-circle"></i>
-                        <p>Mi Usuario</p>
-                      </a>
-                    </li>
-                    {% if usuario.rol == 'Administrador'%}
-                    <li class="nav-item">
-                      <a class="nav-link" href="/usuarios" style="color: #fff;">
-                        <i class="fas fa-users"></i>
-                        <p>Usuarios</p>
-                      </a>
-                    </li>
-                    {%endif%}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/historiasclinicas" style="color: #fff;">
-                            <i class="fas fa-notes-medical"></i>
-                          <p>Historias Clinicas</p>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/citas" style="color: #fff;">
-                            <i class="fas fa-calendar-alt"></i>
-                          <p>Citas</p>
-                        </a>
-                      </li>
-                      {% if usuario.rol == 'Administrador'%}
-                        <li class="nav-item">
-                        <a class="nav-link" href="/maestros" style="color: #fff;">
-                            <i class="fas fa-cogs"></i>
-                            <p>Maestros</p>
-                        </a>
-                        </li>
+                                    <div>
+                                        <p style="font-weight: bold;">Primer Nombre: {{usuario.primernombre}}</p>
+                                    </div>
+                                    <div>
+                                        <p style="font-weight: bold;">Segundo Nombre: {{usuario.segundonombre}}</p>
+                                    </div>
+                                    <div>
+                                        <p style="font-weight: bold;">Primer Apellido: {{usuario.primerapellido}}</p>
+                                    </div>
+                                    <div>
+                                        <p style="font-weight: bold;">Segundo Apellido: {{usuario.segundoapellido}}</p>
+                                    </div>
+                                    <div>
+                                        <p style="font-weight: bold;">Sexo: {{usuario.sexo}}</p>
+                                    </div>
+                                    <div>
+                                        <p style="font-weight: bold;">Especialidad:
+                                            {{usuario.especialidad.especialidad}}</p>
+                                    </div>
+                                    <div>
+                                        <p style="font-weight: bold;">Ciudad: {{usuario.ciudad.ciudad}}</p>
+                                    </div>
+                                    <div>
+                                        <p style="font-weight: bold;">Tipo Documento: {{usuario.tipodocumento}}</p>
+                                    </div>
+                                    <div>
+                                        <p style="font-weight: bold;">Documento: {{usuario.numerodocumento}}</p>
+                                    </div>
+                                    <div>
+                                        <p style="font-weight: bold;">Rol: {{usuario.rol}}</p>
+                                    </div>
+                                </div>
+                                <div style="font-family: 'Alegreya Sans SC'; margin-top: 5px;" class="col-lg-3">
+                                    <div>
+                                        <p style="font-weight: bold;">Numero Telefono: {{usuario.numerotelefono}}</p>
+                                    </div>
+                                    <div>
+                                        <p style="font-weight: bold;">Correo: {{usuario.usuario}}</p>
+                                    </div>
+                                    {%if usuario.rol == 'Asistente'%}
+                                    <div>
+                                        <p style="font-weight: bold;">Prestadores a Cargo</p>
+                                    </div>
+                                    <div>
+                                        {%for pres in prestador%}
+                                        <p>{{pres.primerapellido}} {{pres.primernombre}}
+                                            --{{pres.especialidad.especialidad}}</p>
+                                        {%endfor%}
+                                    </div>
+                                    {%endif%}
+                                    {%if usuario.rol == 'Prestador'%}
+                                    <div>
+                                        <p style="font-weight: bold;">Asistente: {{usuario.asistente}}
+                                            {%if usuario.permisoscomentario == 'Si'%}<a
+                                                href="/bloqueo/{{usuario.asistente}}" class="btn btn-danger"
+                                                style="color: #fff;">Bloquear
+                                                Observaciones</a>{%else%}<a href="/bloqueo/{{usuario.asistente}}"
+                                                class="btn btn-success" style="color: #fff;">Desbloquear
+                                                Observaciones</a>{%endif%}</p>
+                                    </div>
+                                    {%endif%}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Responsive-->
+                    <div id="responsive">
+                        <div id="perfilfoto">
+                            <img _ngcontent-xhe-c207="" src="{% static 'imagenes/profile.png'%}" width="64" height="64"
+                                alt="Profile Image" class="ml-2 mr-4">
+                        </div>
+                        <div>
+                            <h4 id="rolynombre">{{usuario.primernombre}} {{usuario.primerapellido}}</h4>
+                        </div>
+                        <div>
+                            <h6 id="rolynombre">{{usuario.rol}}</h6>
+                        </div>
+                        <div>
+                            <p id="informacion">Informacion</p>
+                        </div>
+                        <hr />
+                        <div>
+                            <p id="datosinformacion">Primer Nombre: {{usuario.primernombre}}</p>
+                        </div>
+                        <div>
+                            <p id="datosinformacion">Segundo Nombre: {{usuario.segundonombre}}</p>
+                        </div>
+                        <div>
+                            <p id="datosinformacion">Primer Apellido: {{usuario.primerapellido}}</p>
+                        </div>
+                        <div>
+                            <p id="datosinformacion">Segundo Apellido: {{usuario.segundoapellido}}</p>
+                        </div>
+                        <div>
+                            <p id="datosinformacion">Sexo: {{usuario.sexo}}</p>
+                        </div>
+                        <div>
+                            <p id="datosinformacion">Especialidad: {{usuario.especialidad.especialidad}}</p>
+                        </div>
+                        <div>
+                            <p id="datosinformacion">Ciudad: {{usuario.ciudad.ciudad}}</p>
+                        </div>
+                        <div>
+                            <p id="datosinformacion">Tipo Documento: {{usuario.tipodocumento}}</p>
+                        </div>
+                        <div>
+                            <p id="datosinformacion">Documento: {{usuario.numerodocumento}}</p>
+                        </div>
+                        <div>
+                            <p id="datosinformacion">Rol: {{usuario.rol}}</p>
+                        </div>
+                        <!--Contacto-->
+                        <div>
+                            <p id="informacion">Contacto</p>
+                        </div>
+                        <hr />
+                        <div>
+                            <p id="datosinformacion">Numero Telefono: {{usuario.numerotelefono}}</p>
+                        </div>
+                        <div>
+                            <p id="datosinformacion">Correo: {{usuario.usuario}}</p>
+                        </div>
+                        {%if usuario.rol == 'Asistente'%}
+                        <div>
+                            <p id="datosinformacion">Prestadores a Cargo</p>
+                        </div>
+                        <div>
+                            {%for pres in prestador%}
+                            <p>{{pres.primerapellido}} {{pres.primernombre}}
+                                --{{pres.especialidad.especialidad}}</p>
+                            {%endfor%}
+                        </div>
                         {%endif%}
-                  </ul>
-            </div>
-        </div>
-        <div class="main-panel">
-            <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top"
-                style="background-color: #3c3c3c !important; color: #fff !important;">
-                <div class="container-fluid">
-                    <div class="navbar-wrapper">
-                        <a class="navbar-brand" href="javascript:;">
-                            <h6>Copyright © 2021 - Medicuentas Plus V 0.1</h6>
-                        </a>
-                    </div>
-                    <div class="collapse navbar-collapse justify-content-end">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="javascript:;">
-                                    {{usuario.usuario}}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/cambioclave/{{usuario.id}}">
-                                    Cambiar Contraseña
-                                </a>
-                            </li>
-                            {% if usuario.rol == 'Administrador'%}
-                            <li class="nav-item">
-                                <a class="nav-link" href="/cclaveusuario">
-                                    Generar Nueva Contraseña a un Usuario
-                                </a>
-                            </li>
-                            {%endif%}
-                            <li class="nav-item">
-                                <a class="nav-link" href="/logout">
-                                    Cerrar Sesion
-                                </a>
-                            </li>
-                            <!-- your navbar here -->
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <!-- End Navbar -->
-            <div class="content">
-                <div class="position-absolute w-100 row">
-                    <div style="font-family: 'Alegreya Sans SC'; margin-left: 200px;" class="col-lg-2">
-                        <img _ngcontent-xhe-c207="" src="{% static 'imagenes/profile.png'%}" width="64" height="64" alt="Profile Image" class="ml-2 mr-4">
-                    </div>
-                    <div style="font-family: 'Alegreya Sans SC'; margin-left: -80px;" class="col-lg-2">
-                        <div><h4>{{usuario.primernombre}} {{usuario.primerapellido}}</h4></div>
-                        <div><h6>{{usuario.rol}}</h6></div>
-                    </div>
-                    
-                    <div class="row">
-                        <div style="font-family: 'Alegreya Sans SC'; margin-left: 220px; margin-top: 20px;" class="col-lg-6">
-                           <p>Informacion</p>
+                        {%if usuario.rol == 'Prestador'%}
+                        <div>
+                            <p id="datosinformacion">
+                                Asistente: {{usuario.asistente}}
+                                {%if usuario.permisoscomentario == 'Si'%}<a href="/bloqueo/{{usuario.asistente}}"
+                                    class="btn btn-danger" style="color: #fff;">Bloquear
+                                    Observaciones</a>{%else%}<a href="/bloqueo/{{usuario.asistente}}"
+                                    class="btn btn-success" style="color: #fff;">Desbloquear
+                                    Observaciones</a>{%endif%}
+                            </p>
                         </div>
-                        <div style="font-family: 'Alegreya Sans SC'; margin-top: 20px;" class="col-lg-2">
-                            <p>Contacto</p>
-                        </div>
-                    </div>
-                    <hr style="width: 70%; margin-left: 230px;"/>
-                    <div class="row">
-                        <div style="font-family: 'Alegreya Sans SC'; margin-left: 220px; margin-top: 5px;" class="col-lg-5">
-                            
-                            <div>
-                               <p style="font-weight: bold;">Primer Nombre: {{usuario.primernombre}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Segundo Nombre: {{usuario.segundonombre}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Primer Apellido: {{usuario.primerapellido}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Segundo Apellido: {{usuario.segundoapellido}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Sexo: {{usuario.sexo}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Especialidad: {{usuario.especialidad.especialidad}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Ciudad: {{usuario.ciudad.ciudad}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Tipo Documento: {{usuario.tipodocumento}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Documento: {{usuario.numerodocumento}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Rol: {{usuario.rol}}</p>
-                            </div>
-                        </div>
-                        <div style="font-family: 'Alegreya Sans SC'; margin-top: 5px;" class="col-lg-3">
-                            <div>
-                                <p style="font-weight: bold;">Numero Telefono: {{usuario.numerotelefono}}</p>
-                            </div>
-                            <div>
-                                <p style="font-weight: bold;">Correo: {{usuario.usuario}}</p>
-                            </div>
-                            {%if usuario.rol == 'Asistente'%}
-                            <div>
-                                <p style="font-weight: bold;">Prestadores a Cargo</p>
-                            </div>
-                            <div>
-                                {%for pres in prestador%}
-                                <p>{{pres.primerapellido}} {{pres.primernombre}} --{{pres.especialidad.especialidad}}</p>
-                                {%endfor%}
-                            </div>
-                            {%endif%}
-                            {%if usuario.rol == 'Prestador'%}
-                            <div>
-                                <p style="font-weight: bold;">Asistente: {{usuario.asistente}} {%if usuario.permisoscomentario == 'Si'%}<a href="/bloqueo/{{usuario.asistente}}" class="btn btn-danger" style="color: #fff;">Bloquear Observaciones</a>{%else%}<a href="/bloqueo/{{usuario.asistente}}" class="btn btn-success" style="color: #fff;">Desbloquear Observaciones</a>{%endif%}</p>
-                            </div>
-                            {%endif%}
-                        </div>
+                        {%endif%}
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
     <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-        <script type = "text/javascript" >  
-            function preventBack() { window.history.forward(); }  
-            setTimeout("preventBack()", 0);  
-            window.onunload = function () { null };  
-        </script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/index.js'%}" ></script>
+    <script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
 </body>
 
 </html>

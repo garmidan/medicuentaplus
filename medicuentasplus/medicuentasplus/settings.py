@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ln8=h4$29%392605ooc^lr0ab6^=bi78dnaczh(e%dlpukaj-@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["medicuentasplus.com"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -142,7 +142,7 @@ SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SECURE = True
 
 # Set time for expire session
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_AGE = 30
-SESSION_SAVE_EVERY_REQUEST = True
+#SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+#SESSION_COOKIE_AGE = 30
+#SESSION_SAVE_EVERY_REQUEST = True
 

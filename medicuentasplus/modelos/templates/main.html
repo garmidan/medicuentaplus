@@ -1,0 +1,19 @@
+{%load static%}
+<div class="menu_bar_lateral">
+    <a href="#" class="bt-menu"><i class="fas fa-bars"></i></a>
+</div>
+<hr class="hr1" />
+<nav>
+    <ul>
+        <li><a href="/dashboard"><i class="fas fa-user-circle"></i>Mi Perfil</a></li>
+        {% if usuario.rol == 'Administrador'%}
+        <li><a href="/usuarios"><i class="fas fa-users"></i>Usuarios</a></li>
+
+        {%endif%}
+        <li><a href="/historiasclinicas"><i class="fas fa-notes-medical"></i>Historia Clinicas</a></li>
+        <li><a href="/citas"><i class="fas fa-calendar-alt"></i>Citas</a></li>
+        {% if usuario.rol == 'Administrador'%}
+        <li><a href="/maestros"><i class="fas fa-cogs"></i>Maestros</a></li>
+        {%endif%}
+    </ul>
+</nav>

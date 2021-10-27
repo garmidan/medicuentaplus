@@ -1,0 +1,343 @@
+* {
+	margin:0;
+	padding:0;
+}
+
+body {
+	background:#FFFFFA;
+}
+
+header {
+	width:100%;
+	
+}
+
+header nav {
+	width:100%;
+	max-width:100%;
+	height: 100%;
+	background:#3c3c3c;
+}
+
+.menu_bar {
+	display:none;
+}
+
+header nav ul {
+	overflow:hidden;
+	list-style:none;
+}
+
+header nav ul li {
+	float:right;
+}
+header nav h1 {
+	float:left;
+    color: #fff;
+}
+
+header nav ul li a {
+	color:#fff;
+	padding:20px;
+	display:block;
+	text-decoration:none;
+	font-size: 12px;
+}
+
+header nav ul li a:hover {
+	background:#1e73dc;
+    color: #fff;
+	width: 100%;
+}
+
+
+.container-fluid{
+	margin-top: -16px;
+}
+.container-fluid .col-3{
+	height: calc(100vh- 75px);
+    overflow: auto;
+	background:#3c3c3c;
+} 
+
+
+.col-3 nav {
+	width:100%;
+	max-width:100%;
+	height: 818px;
+	background:#3c3c3c;
+	margin-left: -20px;
+	top: 10px;
+}
+.col-3 nav ul {
+	list-style:none;
+}
+
+.col-3 nav h1 {
+    color: #fff;
+}
+
+.col-3 nav ul li a {
+	color:#fff;
+	padding:20px;
+	display:block;
+	text-decoration:none;
+}
+
+.col-3 nav ul li a:hover {
+	background:#1e73dc;
+    color: #fff;
+}
+
+.menu_bar_lateral{
+	display: none;
+}
+
+.img-1{
+	width: 10%;
+	height: 80px;
+	position: absolute;
+	margin: 12px 35px;
+}
+
+.hr1{
+	color: #fff;
+	width: 86%;
+    margin-top: 70px;
+    margin-left: 13px;
+}
+
+.col-3 nav ul li i {
+	margin-right:10px;
+}
+
+#col-9{
+	margin-top:30px;
+	height: 100%;
+}
+
+#responsive{
+	display: none;
+}
+
+#col-9 #completa #perfil{
+	margin-left: 390px;
+    margin-top: -63px;
+}
+
+#botonregistros{
+	margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#subregistros{
+	background-color:#1e73dc;
+	padding: 20px;
+	margin: 10px;
+	border-radius: 15px;
+}
+
+#subregistros div{
+	margin-left: 109px;
+    font-size: 30px;
+}
+
+#subregistros div a{
+	text-decoration: none;
+	font-size: 23px;
+    margin-left: -64px;
+	color: #fff;
+}
+
+#subregistros div i{
+	color: #fff;
+	font-size: 39px;
+}
+
+#tituloformulario{
+	color: #1e73dc;
+	text-align: center;
+}
+
+
+#botonregistrosmaestros{
+	margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#subregistrosmaestros{
+	background-color:#1e73dc;
+	padding: 20px;
+	margin: 10px;
+	border-radius: 15px;
+	margin-left: 202px;
+    margin-top: 53px;
+}
+
+
+#subregistrosmaestros div{
+	margin-left: 109px;
+    font-size: 30px;
+}
+
+#subregistrosmaestros div a{
+	text-decoration: none;
+	font-size: 23px;
+    margin-left: -64px;
+	color: #fff;
+}
+
+#subregistrosmaestros div i{
+	color: #fff;
+	font-size: 39px;
+}
+
+main .container-fluid .row .col-9 #titulo h1{
+	text-align: center;
+}
+
+#formularioresponsive{
+	display: none;
+}
+
+@media screen and (max-width:800px ) {
+	header nav {
+		width:100%;
+		height:100%;
+		left:-100%;
+		margin:0;
+		position: fixed;
+	}
+
+	header nav h1{
+		display: none;
+	}
+
+	header nav ul li {
+		display:block;
+		float:none;
+		border-bottom:1px solid rgba(255,255,255, .3);
+	}
+
+	header nav ul li a {
+		width: 100%;
+	}
+
+	.menu_bar {
+		display:block;
+		width:100%;
+		background:#ccc;
+	}
+
+	.menu_bar .bt-menu {
+		display:block;
+		padding:20px;
+		background:#3c3c3c;
+		color:#fff;
+		text-decoration:none;
+		font-weight: bold;
+		font-size:25px;
+		-webkit-box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		box-sizing:border-box;
+	}
+
+	.menu_bar i {
+		float:right;
+		font-size:40px;
+	}
+
+	.col-3{
+		width: 100%;
+	}
+	#col-9{
+		width: 100%;
+	}
+
+	.col-9{
+		margin-bottom: 10px;
+	}
+	
+	.img-1{
+		display: none;
+	}
+	.hr1{
+		width: 107%;
+		margin-left: -11px;
+		margin-top: -1px;
+	}
+	.img-2{
+		width: 40%;
+		height: 70px;
+	}
+
+	.col-3 nav {
+		width:100%;
+		max-width:100%;
+		height: 100%;
+		background:#3c3c3c;
+		margin-left: -20px;
+		top: 10px;
+	}
+
+	#completa{
+		display: none;
+	}
+
+	#responsive{
+		display: block;
+	}
+
+	#col-9 #responsive div{
+		width: 100%;
+	}
+
+	#col-9 #responsive #informacion{
+		font-family: 'Alegreya Sans SC'
+	}
+
+	#col-9 #responsive div #datosinformacion{
+		font-weight: bold;
+	}
+
+	#col-9 #responsive #perfilfoto img{
+		margin-left: 100px;
+	}
+
+	#col-9 #responsive #rolynombre{
+		width: 100%;
+		text-align: center;
+	}
+	
+	#subregistros{
+		width: 100%;
+	}
+
+	#subregistrosmaestros{
+		width: 90%;
+		margin-top: 10px;
+		margin-left: 14px;
+	}
+
+	#tituloformulario{
+		color: #1e73dc;
+		text-align: center;
+		font-size: 14px;
+    	margin-top: 10px;
+	}
+
+	#formularionormal{
+		display: none;
+	}
+
+	#formularioresponsive{
+		display: block;
+	}
+	
+	#botonrespon{
+		width: 100%;
+		margin-top: 10px;
+	}
+
+	
+}

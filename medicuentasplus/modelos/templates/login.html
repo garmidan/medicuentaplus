@@ -4,55 +4,59 @@
 
 <head>
     <title>MEDICUENTAS PLUS</title>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    
-    </head>
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="{% static 'css/login.css' %}" rel="stylesheet" />
+</head>
 
 <body>
-    <nav class="navbar navbar-light bg-light justify-content-between" style="background-color: #3c3c3c !important;">
-        <a class="navbar-brand">
-            <h6 style="color: #fff !important; font-size: 13px;">Copyright © 2021 - Medicuentas Plus V 0.1</h6>
-        </a>
-    </nav>
-    <div class="container" style="background-color: #fff;
-    padding: 10px 20px 10px 20px;
-    border-radius: 5px;
-    box-shadow: 1px 1px 2px 1px rgb(0 0 0 / 20%);
-    width: 600px;
-    margin: auto;
-    padding-top: 20px;">
-        <div>
-            {% if validar == 1%}
-                <div id="alerta" class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Usuario y/o Clave Incorrecta</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {%endif%}
-            {% if validar == 2%}
-                <div id="alerta" class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Usuario bloqueado</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {%endif%}
-            {% if validar == 3%}
-                <div id="alerta" class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>No puede ingresar no tiene prestador asignado</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {%endif%}
+    <header>
+        <div class="menu_bar">
+            <p>Copyright © 2021 - Medicuentas Plus V 0.1</p>
+        </div>
+
+    </header>
+    <main>
+        <div class="container">
             <form method="POST" action="/" style="margin: 0;
-            padding: 0;
-            font-family: 'Alegreya Sans SC';">
+                padding: 0;
+                font-family: 'Alegreya Sans SC';">
                 {% csrf_token %}
                 <div>
                     <h3 style="text-align: center;">Iniciar Sesión</h3>
                 </div>
                 <div class="form-group">
+                    <label for="exampleInputEmail1" style="display: inline-block;
+                        margin-bottom: .5rem">Correo Electronico</label>
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail1"
+                        aria-describedby="emailHelp">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1" style="display: inline-block;
+                        margin-bottom: .5rem">Contraseña</label>
+                    <input type="password" name="clave" class="form-control" id="exampleInputPassword1">
+                </div>
+                <div class="form-group" style="margin-top: 10px;">
+                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="responsive">
+            <form method="POST" action="/" style="margin: 0;
+            padding: 0;
+            font-family: 'Alegreya Sans SC';">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div>
+                        <h3 style="text-align: center;">Iniciar Sesión</h3>
+                    </div>
                     <label for="exampleInputEmail1" style="display: inline-block;
                     margin-bottom: .5rem">Correo Electronico</label>
                     <input type="email" name="email" class="form-control" id="exampleInputEmail1"
@@ -68,13 +72,51 @@
                 </div>
             </form>
         </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-        crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"
-        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    
+        <div class="mt-4 mb-4">
+            <h1 id="bienvenido">¡BIENVENIDOS A LA PLATAFORMA EN LINEA DE MEDICUENTAS PLUS! </h1>
+            <p id="parrafo">Si eres prestador o asistente aquí puedes ingresar con tu usuario y contraseña asignados.
+
+            </p>
+            <p id="parrafo"> Si no eres usuario te invitamos a visitar nuestra página web <a target="blank"
+                    href="https://medicuentas.com/">medicuentas.com</a></p>
+            <p id="parrafo"> donde encontrarás toda la información que necesites</p>
+        </div>
+        <footer id="normalfooter">
+            <div id="logofooter">
+                <img id="imgfooter" src="{% static 'imagenes/logo1.png'%}">
+            </div>
+            <div>
+                <p id="textofooter">Servicio al cliente: +57 311 206 9564</p>
+            </div>
+            <div>
+                <p id="textofooter">Correo: medicuentas.plus@gmail.com</p>
+            </div>
+            <div>
+                <p id="textofooterderechos">Todos los derechos reservados a MEDICUENTAS PLUS</p>
+            </div>
+        </footer>
+        <footer id="footerresponsive">
+            <div id="logofooterresponsive">
+                <img id="imgfooteresponsive" src="{% static 'imagenes/logo1.png'%}">
+            </div>
+            <div>
+                <p id="textofooter">Servicio al cliente: +57 311 206 9564</p>
+            </div>
+            <div>
+                <p id="textofooter">Correo: medicuentas.plus@gmail.com</p>
+            </div>
+            <div>
+                <p id="textofooterderechos">Todos los derechos reservados a MEDICUENTAS PLUS</p>
+            </div>
+        </footer>
+    </main>
+</body>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
