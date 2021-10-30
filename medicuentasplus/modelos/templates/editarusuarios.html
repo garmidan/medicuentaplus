@@ -4,133 +4,44 @@
 
 <head>
     <title>MEDICUENTAS PLUS</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css"
-        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-    <!-- CSS only -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@300&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <!-- Material Kit CSS -->
-    <link href="{% static 'css/material-dashboard.css' %}" rel="stylesheet" />
-        <script type = "text/javascript" >  
-            function preventBack() { window.history.forward(); }  
-            setTimeout("preventBack()", 0);  
-            window.onunload = function () { null };  
-        </script> 
+    {% block head %}
+    {% include "head.html" %}
+    {% endblock %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.2/datatables.min.css" />
+    <script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
 </head>
 
 <body>
-    <div class="wrapper ">
-        <div class="sidebar" data-color="purple" data-background-color="white">
-            <!--
-      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-
-      Tip 2: you can also add an image using data-image tag
-  -->
-            <div class="logo" style="background-color: #3c3c3c;">
-                <a href="" class="simple-text logo-mini">
-                    <img src="{% static 'imagenes/logo1.png'%}" style=" width: 70%; margin-bottom: 10px" />
-                </a>
-            </div>
-            <div class="sidebar-wrapper" style="background-color: #3c3c3c !important;">
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link" style="color: #fff;" href="/dashboard">
-                            <i class="fas fa-user-circle"></i>
-                            <p>Mi Usuario</p>
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/usuarios" style="background-color: #1e73dc !important;">
-                            <i class="fas fa-users"></i>
-                            <p>Usuarios</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/historiasclinicas" style="color: #fff;">
-                            <i class="fas fa-notes-medical"></i>
-                            <p>Historias Clinicas</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/citas" style="color: #fff;">
-                            <i class="fas fa-calendar-alt"></i>
-                            <p>Citas</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/maestros" style="color: #fff;">
-                            <i class="fas fa-cogs"></i>
-                            <p>Maestros</p>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="main-panel">
-            <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top"
-                style="background-color: #3c3c3c !important; color: #fff !important;">
-                <div class="container-fluid">
-                    <div class="navbar-wrapper">
-                        <a class="navbar-brand" href="javascript:;">
-                            <h6>Copyright © 2021 - Medicuentas Plus V 0.1</h6>
-                        </a>
-                    </div>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="navbar-toggler-icon icon-bar"></span>
-                        <span class="navbar-toggler-icon icon-bar"></span>
-                        <span class="navbar-toggler-icon icon-bar"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-end">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="javascript:;">
-                                    Correo
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/cambioclave/{{usuario.id}}">
-                                    Cambiar Contraseña
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/logout">
-                                    Cerrar Sesion
-                                </a>
-                            </li>
-                            <!-- your navbar here -->
-                        </ul>
-                    </div>
+    <header>
+        {% block header %}
+        {% include "header.html" %}
+        {% endblock %}
+    </header>
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-3">
+                    {% block main %}
+                    {% include "main.html" %}
+                    {% endblock %}
                 </div>
-            </nav>
-            <!-- End Navbar -->
-            <div class="content">
-                <div>
+                <div class="col-9">
                     <form class="row g-3" method="POST" action="/usuarios/editar/{{useredit.id}}">
                         {% csrf_token %}
-                        <div class="col-md-3">
+                        <div class="col-md-3 mt-4">
                             <input type="text" class="form-control" value="{{useredit.primernombre}}" id="validationDefault01" name="primerN" placeholder="Primer Nombre" required>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 mt-4">
                             <input type="text" class="form-control" id="validationDefault02" value="{{useredit.segundonombre}}" name="segundoN" placeholder="Segundo Nombre" >
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 mt-4">
                             <input type="text" value="{{useredit.primerapellido}}"  class="form-control" id="validationDefault01" name="primerA" placeholder="Primer Apellido"  required>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 mt-4">
                             <input type="text" value="{{useredit.segundoapellido}}" class="form-control" id="validationDefault02" name="segundoA" placeholder="Segundo Apellido" required>
                         </div>
                         <div class="col-md-6">
@@ -233,40 +144,23 @@
                             </select>
                         </div>
                         {%endif%}
-                        <div class="col-2">
+                        <div class="col-4">
                             <a  href="/usuarios" class="btn btn-danger" style="background-color: red !important;" type="submit">Volver</a>
                         </div>
-                        <div class="col-10">
+                        <div class="col-8">
                             <button class="btn btn-primary" style="background-color: #1e73dc !important;" type="submit">Guardar</button>
                         </div>
                     </form>
                 </div>
             </div>
-            <!--<footer class="footer">
-                <div class="container-fluid">
-                    <nav class="float-left">
-                        <ul>
-                            <li>
-                                <a href="https://www.creative-tim.com">
-                                    Creative Tim
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div class="copyright float-right">
-                        &copy;
-                        <script>
-                            document.write(new Date().getFullYear())
-                        </script>, made with <i class="material-icons">favorite</i> by
-                        <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
-                    </div>
-                   your footer here 
-                </div>
-            </footer>-->
         </div>
-    </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/index.js'%}"></script>
 </body>
 
 </html>
