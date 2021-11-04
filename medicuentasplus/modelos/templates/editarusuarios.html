@@ -134,7 +134,7 @@
                         </div>
                         <div class="col-md-4">
                             <select class="form-control" name="asistente">
-                            <option selected value="{{useredit.id}}">{{useredit.asistente}}</option>
+                            <option selected value="{{useredit.asistente}}">{{useredit.asistente}}</option>
                             {% for asi in asistente%}
                                 {% if asi.primernombre|add:"-"|add:asi.usuario == useredit.asistente%}
                                 {%else%}

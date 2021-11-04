@@ -25,7 +25,7 @@ SECRET_KEY = 'ln8=h4$29%392605ooc^lr0ab6^=bi78dnaczh(e%dlpukaj-@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["medicuentasplus.com"]
 
 
 # Application definition

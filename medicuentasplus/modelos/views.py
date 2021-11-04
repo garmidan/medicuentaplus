@@ -27,7 +27,6 @@ def dashboard(request):
             prestador = {}
             if usuario.rol == "Asistente":
                 prestador = Usuario.objects.filter(asistente=usuario.primernombre+"-"+usuario.usuario)
-                print(prestador)
             return render(request,'dashboard.html',{"usuario":usuario,"sesion":request.session.get('validar'),"prestador":prestador})
         else:
             return redirect('/')
@@ -258,9 +257,8 @@ def registrarcitapacienteregister(request):
                 paciente.correo = request.POST.get("correo")
                 paciente.tipodocumento = request.POST.get("tipodoc")
                 paciente.save()
-                editpaciente = Paciente.objects.last()
                 agendarcita = Cita(
-                        paciente = editpaciente,
+                        paciente = paciente,
                         especialidad = especialidadselect,
                         especialista = especialistaselect,
                         actividad =  request.POST.get("actividad"),
@@ -381,7 +379,7 @@ def editarusuarios(request, iduser):
                     editusuario.segundoapellido = request.POST.get("segundoA")
                     editusuario.tipodocumento = request.POST.get("tipdoc")
                     editusuario.sexo = request.POST.get("sexo")
-                    editusuario.telefono = request.POST.get("telefono")
+                    editusuario.numerotelefono = request.POST.get("telefono")
                     editusuario.numerodocumento = request.POST.get("numerodoc")
                     ciudad = Ciudad.objects.get(id = request.POST.get("ciudad"))
                     editusuario.ciudad = ciudad
@@ -392,9 +390,15 @@ def editarusuarios(request, iduser):
                         editusuario.asistente = request.POST.get("asistente")
                     elif editusuario.rol == "Asistente":
                         if Usuario.objects.filter(asistente=editusuario.primernombre+"-"+editusuario.usuario).exists():
-                            pres = Usuario.objects.get(asistente=editusuario.primernombre+"-"+editusuario.usuario)
-                            pres.asistente = request.POST.get("primerN")+"-"+request.POST.get("correo")
-                            pres.save()
+                            pres = Usuario.objects.filter(asistente=editusuario.primernombre+"-"+editusuario.usuario)
+                            if pres.count() > 1:
+                                for pre in pres:
+                                    pre.asistente = request.POST.get("primerN")+"-"+request.POST.get("correo")
+                                    pre.save()
+                            else:
+                                presusuario = Usuario.objects.get(asistente=editusuario.primernombre+"-"+editusuario.usuario)
+                                presusuario.asistente = request.POST.get("primerN")+"-"+request.POST.get("correo")
+                                presusuario.save()
                     editusuario.primernombre = request.POST.get("primerN")
                     editusuario.usuario = request.POST.get("correo")
                     editusuario.save()
@@ -563,7 +567,12 @@ def historiaclinica(request):
                     validacion = 2
             
             if usuario.rol == "Prestador":
+                print(usuario.id)
                 historiaclinica = HistoriasClinica.objects.filter(especialista = usuario)
+            if usuario.rol == "Asistente":
+                prestadores = Usuario.objects.filter(asistente=usuario.primernombre+"-"+usuario.usuario)
+                print(prestadores)
+                return render(request,"historiasclinicas.html",{"prestador":prestadores,"usuario":usuario,"pacientes":pacientes,"historiaclinica":historiaclinica,"validacion":validacion,"sesion":request.session.get('validar'),"diagnosticos":diagnosticos})
             return render(request,"historiasclinicas.html",{"usuario":usuario,"pacientes":pacientes,"historiaclinica":historiaclinica,"validacion":validacion,"sesion":request.session.get('validar'),"diagnosticos":diagnosticos})
         else:
             return redirect('/')
@@ -613,7 +622,9 @@ def historialregistrar(request,idhistoria):
                                 fecha1 = fecha1
                             else:
                                 fecha1 = fecha2
-                    consultas = Consulta.objects.get(fechaconsulta=fecha1, historiaclinicas = historiaclinica)
+                    consultas = Consulta.objects.filter(fechaconsulta=fecha1, historiaclinicas = historiaclinica)
+                    for co in consultas:
+                        consultas = Consulta.objects.get(id=co.id)
                 else:
                     for con in consultas:
                         consultas = Consulta.objects.get(id=con.id)

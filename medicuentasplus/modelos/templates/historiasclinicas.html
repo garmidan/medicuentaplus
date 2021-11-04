@@ -81,6 +81,60 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {%if usuario.rol == "Asistente"%}
+                                {% for hist in historiaclinica%}
+                                {% for pres in prestador%}
+                                {%if hist.especialista.numerodocumento == pres.numerodocumento%}
+                                <tr>
+                                    <td>{{hist.paciente.tipodocumento}}</td>
+                                    <td>{{hist.paciente.numerodocumento}}</td>
+                                    <td>{{hist.paciente.nombres}}</td>
+                                    <td>{{hist.paciente.apellidos}}</td>
+                                    {% if usuario.rol == 'Administrador'%}
+                                    <td>
+                                        <a href="/historiasclinicas/historialregistrarconsulta/{{hist.id}}"
+                                            type="submit" style="background-color: green; color: white;"
+                                            class="btn btn-danger">Nueva
+                                            Consulta</a>
+                                        <a href="/historiasclinicas/editarhistoriaclinica/{{hist.id}}" type="submit"
+                                            style="background-color: #1e73dc; color: white;"
+                                            class="btn btn-danger">Editar
+                                            Historia</a>
+                                        <a type="button" onclick="generatepdf('{{hist.id}}');"
+                                            style="background-color: #3c3c3c; color: white;"
+                                            class="btn btn-primary">Visualizar Historia</a>
+                                    </td>
+                                    {%else%}
+                                    {% if usuario.rol == 'Prestador'%}
+                                    <td>
+                                        <a href="/historiasclinicas/historialregistrarconsulta/{{hist.id}}"
+                                            type="submit" style="background-color: green; color: white;"
+                                            class="btn btn-danger">Nueva
+                                            Consulta</a>
+                                        <a href="/historiasclinicas/editarhistoriaclinica/{{hist.id}}" type="submit"
+                                            style="background-color: #1e73dc; color: white;"
+                                            class="btn btn-danger">Editar
+                                            Historia</a>
+                                        <a type="button" onclick="generatepdf('{{hist.id}}');"
+                                            style="background-color: #3c3c3c; color: white;"
+                                            class="btn btn-primary">Visualizar Historia</a>
+                                    </td>
+                                    {%endif%}
+                                    {% if usuario.rol == 'Asistente'%}
+                                    <td>
+                                        <a type="button" onclick="generatepdf('{{hist.id}}');"
+                                            style="background-color: #3c3c3c; color: white;"
+                                            class="btn btn-primary">Visualizar Historia</a>
+                                    </td>
+                                    {%endif%}
+
+                                    {%endif%}
+
+                                </tr>
+                                {%endif%}
+                                {%endfor%}
+                                {%endfor%}
+                                {%else%}
                                 {% for hist in historiaclinica%}
                                 <tr>
                                     <td>{{hist.paciente.tipodocumento}}</td>
@@ -129,6 +183,7 @@
 
                                 </tr>
                                 {% endfor %}
+                                {%endif%}
                             </tbody>
                             <tfoot>
                                 <tr>
